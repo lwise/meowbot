@@ -9,15 +9,14 @@ interface MessageListener : Listener {
     // use lowercase match
     val regexString: String
 
-    override fun isTriggered(content: String) : Boolean{
+    override fun isTriggered(content: String): Boolean {
         val regex = regexString.toRegex()
         return regex.containsMatchIn(content.toLowerCase())
     }
 
-    override fun respond(channel: MessageChannel) : Mono<Message> {
-        return channel.createMessage( getResponseMessage())
+    override fun respond(channel: MessageChannel): Mono<Message> {
+        return channel.createMessage(getResponseMessage())
     }
 
-    fun getResponseMessage() : String
-
+    fun getResponseMessage(): String
 }

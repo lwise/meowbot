@@ -11,6 +11,5 @@ class MessageListenerTest {
         assertEquals("meow!", meowBot.getResponseToMessage("meow"))
         assertEquals("meow!", meowBot.getResponseToMessage("nya"))
         assertEquals("meow!", meowBot.getResponseToMessage("nyanya"))
-
     }
 }

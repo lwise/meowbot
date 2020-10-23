@@ -7,5 +7,5 @@ import reactor.core.publisher.Mono
 interface Listener {
 
     fun respond(channel: MessageChannel): Mono<Message>
-    fun isTriggered(content: String) : Boolean
+    fun isTriggered(content: String): Boolean
 }
