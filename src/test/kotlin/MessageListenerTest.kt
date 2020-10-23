@@ -9,5 +9,8 @@ class MessageListenerTest {
         val meowListener = MeowListener()
         val meowBot = MockMeowBot(listOf(meowListener))
         assertEquals("meow!", meowBot.getResponseToMessage("meow"))
+        assertEquals("meow!", meowBot.getResponseToMessage("nya"))
+        assertEquals("meow!", meowBot.getResponseToMessage("nyanya"))
+
     }
 }

@@ -5,7 +5,7 @@ import discord4j.core.`object`.entity.channel.MessageChannel
 import reactor.core.publisher.Mono
 
 interface Listener {
-    val trigger: Any
-    val response: Any?
+
     fun respond(channel: MessageChannel): Mono<Message>
+    fun isTriggered(content: String) : Boolean
 }
