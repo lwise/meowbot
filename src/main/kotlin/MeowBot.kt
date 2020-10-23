@@ -1,8 +1,8 @@
 import discord4j.core.DiscordClientBuilder
 import io.github.cdimascio.dotenv.dotenv
 import listeners.messages.MeowListener
-import util.listenForMessage
-import util.listenForReady
+import util.subscribeToMessages
+import util.subscribeToReady
 
 fun main() {
     val client = DiscordClientBuilder.create(dotenv()["BOT_TOKEN"])
@@ -12,8 +12,8 @@ fun main() {
 
     val messageListeners = listOf(MeowListener())
     client?.apply {
-        listenForReady()
-        listenForMessage(messageListeners)
+        subscribeToReady()
+        subscribeToMessages(messageListeners)
         onDisconnect().block()
     }
 }

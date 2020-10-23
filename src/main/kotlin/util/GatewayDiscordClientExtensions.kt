@@ -7,7 +7,7 @@ import discord4j.core.event.domain.message.MessageCreateEvent
 import listeners.messages.MessageListener
 import kotlin.String
 
-fun GatewayDiscordClient.listenForReady() {
+fun GatewayDiscordClient.subscribeToReady() {
     eventDispatcher.on(ReadyEvent::class.java).subscribe { event: ReadyEvent ->
         event.self.let {
             log(this.javaClass.name, String.format("Logged in as %s#%s", it.username, it.discriminator))
@@ -15,7 +15,7 @@ fun GatewayDiscordClient.listenForReady() {
     }
 }
 
-fun GatewayDiscordClient.listenForMessage(listeners: List<MessageListener>) {
+fun GatewayDiscordClient.subscribeToMessages(listeners: List<MessageListener>) {
     var listener: MessageListener? = null
     eventDispatcher.on(MessageCreateEvent::class.java)
         .map { it.message }
