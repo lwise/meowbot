@@ -24,7 +24,7 @@ fun GatewayDiscordClient.subscribeToMessages(listeners: List<MessageListener>) {
             message.author.map { !it.isBot }.orElse(false)
         }
         .filter { message ->
-            listener = listeners.firstOrNull { it.trigger.equals(message.content, ignoreCase = true) }
+            listener = listeners.firstOrNull { it.isTriggered(message.content) }
             listener != null
         }
         .flatMap(Message::getChannel)
