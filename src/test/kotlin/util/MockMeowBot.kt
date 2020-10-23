@@ -1,7 +1,7 @@
 package util
 
-import listeners.Listener
-import listeners.messages.MessageListener
+import com.lwise.listeners.Listener
+import com.lwise.listeners.messages.MessageListener
 
 @Suppress("UNCHECKED_CAST")
 class MockMeowBot(val listeners: List<Listener>) {

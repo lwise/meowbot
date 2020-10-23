@@ -1,4 +1,4 @@
-package listeners
+package com.lwise.listeners
 
 import discord4j.core.`object`.entity.Message
 import discord4j.core.`object`.entity.channel.MessageChannel

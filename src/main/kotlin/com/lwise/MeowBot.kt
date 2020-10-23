@@ -1,8 +1,10 @@
+package com.lwise
+
 import discord4j.core.DiscordClientBuilder
 import io.github.cdimascio.dotenv.dotenv
-import listeners.messages.MeowListener
-import util.subscribeToMessages
-import util.subscribeToReady
+import com.lwise.listeners.messages.MeowListener
+import com.lwise.util.subscribeToMessages
+import com.lwise.util.subscribeToReady
 
 fun main() {
     val client = DiscordClientBuilder.create(dotenv()["BOT_TOKEN"])

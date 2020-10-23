@@ -1,4 +1,4 @@
-package util
+package com.lwise.util
 
 import org.slf4j.LoggerFactory
 

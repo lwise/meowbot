@@ -1,4 +1,4 @@
-import listeners.messages.MeowListener
+import com.lwise.listeners.messages.MeowListener
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import util.MockMeowBot

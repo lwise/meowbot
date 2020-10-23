@@ -1,6 +1,6 @@
-package listeners.messages
+package com.lwise.listeners.messages
 
-import listeners.Listener
+import com.lwise.listeners.Listener
 
 interface MessageListener : Listener {
     override val trigger: String
