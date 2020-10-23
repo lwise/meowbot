@@ -1,0 +1,26 @@
+name: MeowBot CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Kotlin
+        uses: fwilhe2/setup-kotlin@main
+      - name: Build MeowBot
+        run: ./gradlew build
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Kotlin
+        uses: fwilhe2/setup-kotlin@main
+      - name: Run MeowBot tests
+        run: ./gradlew test
+        
