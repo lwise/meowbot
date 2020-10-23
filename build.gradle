@@ -16,6 +16,15 @@ compileKotlin {
     }
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.lwise.MeowBotKt'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 dependencies {
     implementation "io.github.cdimascio:dotenv-kotlin:6.2.2"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.0"

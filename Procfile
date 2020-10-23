@@ -1,2 +1,2 @@
-worker: java -jar out/artifacts/MeowBot_jar/MeowBot.jar 
+worker: java -jar build/libs/MeowBot-0.0.1.jar
 
