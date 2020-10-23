@@ -1,10 +1,10 @@
 package com.lwise
 
-import discord4j.core.DiscordClientBuilder
-import io.github.cdimascio.dotenv.dotenv
 import com.lwise.listeners.messages.MeowListener
 import com.lwise.util.subscribeToMessages
 import com.lwise.util.subscribeToReady
+import discord4j.core.DiscordClientBuilder
+import io.github.cdimascio.dotenv.dotenv
 
 fun main() {
     val dotenv = dotenv {

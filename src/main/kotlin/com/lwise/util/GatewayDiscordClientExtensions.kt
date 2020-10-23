@@ -1,10 +1,10 @@
 package com.lwise.util
 
+import com.lwise.listeners.messages.MessageListener
 import discord4j.core.GatewayDiscordClient
 import discord4j.core.`object`.entity.Message
 import discord4j.core.event.domain.lifecycle.ReadyEvent
 import discord4j.core.event.domain.message.MessageCreateEvent
-import com.lwise.listeners.messages.MessageListener
 import kotlin.String
 
 fun GatewayDiscordClient.subscribeToReady() {

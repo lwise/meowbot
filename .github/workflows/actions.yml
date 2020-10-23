@@ -23,4 +23,11 @@ jobs:
         uses: fwilhe2/setup-kotlin@main
       - name: Run MeowBot tests
         run: ./gradlew test
-        
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install ktlint
+        run: brew install ktlint
+      - name: Run ktlint
+        run: ./gradlew ktlintCheck
