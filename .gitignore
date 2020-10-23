@@ -1,0 +1,8 @@
+# Do not track the content of these folders
+build/
+.idea/
+.gradle/
+
+# Do not track the content of these files
+.env
+
