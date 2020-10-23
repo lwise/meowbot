@@ -7,7 +7,10 @@ import com.lwise.util.subscribeToMessages
 import com.lwise.util.subscribeToReady
 
 fun main() {
-    val client = DiscordClientBuilder.create(dotenv()["BOT_TOKEN"])
+    val dotenv = dotenv {
+        ignoreIfMissing = true
+    }
+    val client = DiscordClientBuilder.create(dotenv["BOT_TOKEN"] ?: System.getenv("BOT_TOKEN"))
         .build()
         .login()
         .block()
