@@ -1,5 +1,6 @@
 # Do not track the content of these folders
 build/
+out/
 .idea/
 .gradle/
 
