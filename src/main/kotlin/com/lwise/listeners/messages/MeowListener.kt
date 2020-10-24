@@ -1,9 +1,13 @@
 package com.lwise.listeners.messages
 
+import com.lwise.text.generators.MeowMessageGenerator
+
 class MeowListener : MessageListener {
-    override val regexString = "(meow|nya|miaou|miao|mew|miau|miaow)+[^\\w\\s]*$"
+
+    override val regexString = "(meow|nya|miaou|miao|mew|miau|miaow|mnou)+[^\\w\\s]*$"
+    val messageGenerator = MeowMessageGenerator()
 
     override fun getResponseMessage(): String {
-        return "meow!"
+        return messageGenerator.generateText()
     }
 }
