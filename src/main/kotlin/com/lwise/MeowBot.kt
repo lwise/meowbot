@@ -5,7 +5,9 @@ import com.lwise.listeners.messages.MeowListener
 import com.lwise.listeners.reactions.AlignmentReactionListener
 import com.lwise.util.DatabaseClient
 import com.lwise.util.TableTransformer
+import com.lwise.util.launchDatabaseSyncRoutine
 import com.lwise.util.log
+import com.lwise.util.subscribeToDatabaseSync
 import com.lwise.util.subscribeToMessages
 import com.lwise.util.subscribeToReactionAdds
 import com.lwise.util.subscribeToReactionRemoves
@@ -33,6 +35,8 @@ fun main() {
         subscribeToMessages(messageListeners)
         subscribeToReactionAdds(reactionListeners)
         subscribeToReactionRemoves(reactionListeners)
+        subscribeToDatabaseSync()
+        launchDatabaseSyncRoutine(300000) // 5 minutes
         onDisconnect().block()
     }
 }

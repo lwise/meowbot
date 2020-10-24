@@ -1,15 +1,23 @@
 package com.lwise.util
 
+import com.lwise.alignment.AlignmentDefinitions
 import com.lwise.listeners.messages.MessageListener
 import com.lwise.listeners.reactions.ReactionListener
-import com.lwise.types.toMessageEvent
-import com.lwise.types.toReactionAddEvent
-import com.lwise.types.toReactionRemoveEvent
+import com.lwise.types.DatabaseSyncEvent
+import com.lwise.types.events.toMessageEvent
+import com.lwise.types.events.toReactionAddEvent
+import com.lwise.types.events.toReactionRemoveEvent
+import discord4j.common.util.Snowflake
 import discord4j.core.GatewayDiscordClient
+import discord4j.core.`object`.entity.Message
 import discord4j.core.event.domain.lifecycle.ReadyEvent
 import discord4j.core.event.domain.message.MessageCreateEvent
 import discord4j.core.event.domain.message.ReactionAddEvent
 import discord4j.core.event.domain.message.ReactionRemoveEvent
+import discord4j.gateway.ShardInfo
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import reactor.core.publisher.Mono
 import kotlin.String
 
 fun GatewayDiscordClient.subscribeToReady() {
@@ -70,4 +78,41 @@ fun GatewayDiscordClient.subscribeToReactionRemoves(listeners: List<ReactionList
             listener?.respond(it)
         }
         .subscribe()
+}
+
+@Suppress("UNUSED_VARIABLE")
+fun GatewayDiscordClient.launchDatabaseSyncRoutine(timeInterval: Long) {
+    val job = CoroutineScope(Dispatchers.IO).launchPeriodicAsync(timeInterval) {
+        val usersQuery = "SELECT * FROM users;"
+        val users = DatabaseClient.query(usersQuery, UserDataListTransformer())!!
+        eventDispatcher.publish(DatabaseSyncEvent(this, ShardInfo.create(0, 1), Snowflake.of("489615317534769162"), users))
+    }
+}
+
+// sorry this is kind of disgusting
+fun GatewayDiscordClient.subscribeToDatabaseSync() {
+    eventDispatcher.on(DatabaseSyncEvent::class.java).map { event ->
+        val guildMembers = event.getGuild().block()!!.members.collectList()
+        event.getUsers().forEach { user ->
+            val alignmentRole = AlignmentDefinitions.calculateRole(user.chaoticPoints, user.lawfulPoints, user.goodPoints, user.evilPoints)
+            val memberToUpdate = guildMembers.block()!!.firstOrNull {
+                it.username == user.userName
+            }
+            memberToUpdate?.let { member ->
+                val usersCurrentAlignmentRole = member.roles
+                    .map { role ->
+                        role.name
+                    }.filter { roleName ->
+                        AlignmentDefinitions.ALIGNMENT_ROLES.keys.contains(roleName)
+                    }.collectList()
+                usersCurrentAlignmentRole.block()!!.firstOrNull()?.let { currentRole ->
+                    if (alignmentRole != currentRole) {
+                        member.removeRole(Snowflake.of(AlignmentDefinitions.ALIGNMENT_ROLES[currentRole])).block()
+                        member.addRole(Snowflake.of(AlignmentDefinitions.ALIGNMENT_ROLES[alignmentRole])).block()
+                    }
+                }
+            }
+        }
+        Mono.empty<Message>()
+    }.subscribe()
 }

@@ -1,7 +1,7 @@
 package com.lwise.listeners.messages
 
 import com.lwise.alignment.AlignmentDefinitions.Companion.ALIGNMENT_ROLES
-import com.lwise.types.MessageEvent
+import com.lwise.types.events.MessageEvent
 import com.lwise.util.DatabaseClient
 import discord4j.common.util.Snowflake
 import discord4j.core.`object`.entity.Message
@@ -24,7 +24,7 @@ class AlignmentOptInListener : MessageListener {
             .map { role ->
                 role.name
             }.filter { roleName ->
-                ALIGNMENT_ROLES.contains(roleName)
+                ALIGNMENT_ROLES.keys.contains(roleName)
             }.collectList()
         val filteredRoles = userAlignmentRoles.block()!!
         return if (!filteredRoles.isNullOrEmpty()) {
