@@ -2,12 +2,14 @@ package com.lwise.listeners.messages
 
 import com.lwise.alignment.AlignmentDefinitions.Companion.ALIGNMENT_ROLES
 import com.lwise.types.MessageEvent
-import com.lwise.util.log
+import com.lwise.util.DatabaseClient
+import discord4j.common.util.Snowflake
 import discord4j.core.`object`.entity.Message
 import reactor.core.publisher.Mono
 
 class AlignmentOptInListener : MessageListener {
-    override val regexString: String = "meow!play alignment"
+
+    override val regexString: String = "m!play alignment"
 
     override fun isTriggered(content: String): Boolean {
         return content.equals(regexString, ignoreCase = true)
@@ -20,15 +22,25 @@ class AlignmentOptInListener : MessageListener {
         val userToOptIn = responseVector.author
         val userAlignmentRoles = userToOptIn.roles
             .map { role ->
-                log(this.javaClass.name, role.name)
                 role.name
             }.filter { roleName ->
                 ALIGNMENT_ROLES.contains(roleName)
             }.collectList()
         val filteredRoles = userAlignmentRoles.block()!!
         return if (!filteredRoles.isNullOrEmpty()) {
+            // the user is already playing
             responseVector.channel.createMessage(getFailureResponseMessage())
         } else {
+            // need to set the user up
+
+            // insert user into database
+            val userId = userToOptIn.id.asBigInteger()
+            val userName = userToOptIn.username
+            val userQuery = "INSERT INTO users (id, username, chaotic_points, lawful_points, good_points, evil_points) VALUES ($userId, '$userName', 0, 0, 0, 0) ON CONFLICT DO NOTHING;"
+            DatabaseClient.update(userQuery)
+
+            // give the user the True Neutral role to start
+            userToOptIn.addRole(Snowflake.of("769424037201444944")).block()
             super.respond(responseVector)
         }
     }
