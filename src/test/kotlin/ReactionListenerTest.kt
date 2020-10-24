@@ -9,7 +9,7 @@ class ReactionListenerTest {
     fun `test AlignmentListener triggers`() {
         val alignmentListener = AlignmentReactionListener()
         val meowBot = MockMeowBot(listOf(alignmentListener))
-        AlignmentDefinitions.EMOJI_NAME_LIST.forEach {
+        AlignmentDefinitions.EMOJI_NAMES.forEach {
             Assert.assertEquals(true, meowBot.firesOnReaction(it))
         }
         Assert.assertEquals(false, meowBot.firesOnReaction("some_other_custom_emoji"))
