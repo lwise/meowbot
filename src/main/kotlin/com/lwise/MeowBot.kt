@@ -31,12 +31,12 @@ fun main() {
     val messageListeners = listOf(MeowListener(), AlignmentOptInListener())
     val reactionListeners = listOf(AlignmentReactionListener())
     client?.apply {
-        launchDatabaseSyncRoutine(30000)
         subscribeToReady()
         subscribeToMessages(messageListeners)
         subscribeToReactionAdds(reactionListeners)
         subscribeToReactionRemoves(reactionListeners)
         subscribeToDatabaseSync()
+        launchDatabaseSyncRoutine(300000) // 5 minutes
         onDisconnect().block()
     }
 }
