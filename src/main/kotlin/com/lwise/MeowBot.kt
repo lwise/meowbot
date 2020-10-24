@@ -1,5 +1,6 @@
 package com.lwise
 
+import com.lwise.listeners.messages.AlignmentOptInListener
 import com.lwise.listeners.messages.MeowListener
 import com.lwise.listeners.reactions.AlignmentReactionListener
 import com.lwise.util.DatabaseClient
@@ -25,7 +26,7 @@ fun main() {
     val result = DatabaseClient.query("SELECT * FROM pg_catalog.pg_tables;", TableTransformer())
     log("MAIN", result.toString())
 
-    val messageListeners = listOf(MeowListener())
+    val messageListeners = listOf(MeowListener(), AlignmentOptInListener())
     val reactionListeners = listOf(AlignmentReactionListener())
     client?.apply {
         subscribeToReady()
