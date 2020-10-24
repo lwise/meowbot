@@ -1,4 +1,4 @@
-package com.lwise.types
+package com.lwise.types.events
 
 import discord4j.core.`object`.entity.Guild
 import discord4j.core.`object`.entity.Member

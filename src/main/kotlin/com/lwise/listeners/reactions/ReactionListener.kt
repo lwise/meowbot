@@ -1,7 +1,7 @@
 package com.lwise.listeners.reactions
 
 import com.lwise.listeners.Listener
-import com.lwise.types.ReactionEvent
+import com.lwise.types.events.ReactionEvent
 import discord4j.core.`object`.entity.Message
 import reactor.core.publisher.Mono
 
