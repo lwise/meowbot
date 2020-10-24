@@ -5,7 +5,7 @@ import discord4j.core.`object`.entity.Message
 import discord4j.core.`object`.entity.channel.MessageChannel
 import reactor.core.publisher.Mono
 
-interface MessageListener : Listener {
+interface MessageListener : Listener<MessageChannel> {
     // use lowercase match
     val regexString: String
 
@@ -14,8 +14,8 @@ interface MessageListener : Listener {
         return regex.containsMatchIn(content.toLowerCase())
     }
 
-    override fun respond(channel: MessageChannel): Mono<Message> {
-        return channel.createMessage(getResponseMessage())
+    override fun respond(responseVector: MessageChannel): Mono<Message> {
+        return responseVector.createMessage(getResponseMessage())
     }
 
     fun getResponseMessage(): String
