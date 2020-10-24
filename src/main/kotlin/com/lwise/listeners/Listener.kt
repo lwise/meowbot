@@ -1,11 +1,10 @@
 package com.lwise.listeners
 
 import discord4j.core.`object`.entity.Message
-import discord4j.core.`object`.entity.channel.MessageChannel
 import reactor.core.publisher.Mono
 
-interface Listener {
+interface Listener<T> {
 
-    fun respond(channel: MessageChannel): Mono<Message>
+    fun respond(responseVector: T): Mono<Message>
     fun isTriggered(content: String): Boolean
 }
