@@ -1,6 +1,7 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.4.0'
     id "org.jlleitschuh.gradle.ktlint" version "9.4.1"
+
 }
 
 group 'com.lwise'
@@ -34,6 +35,9 @@ dependencies {
     implementation "ch.qos.logback:logback-classic:1.2.3"
     implementation 'org.postgresql:postgresql:42.2.10'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0-M1'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+    compile 'org.json:json:20190722'
 
     testImplementation("junit:junit:4.13")
+
 }
