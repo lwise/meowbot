@@ -4,7 +4,7 @@
 
 ### Quick Getting Started Guide
 
-#### Prerequsite:
+#### Prerequisite:
 - Have Kotlin setup
 - You need to setup a bot account for Meowbot on your discord server. Follow the guide here: https://discordpy.readthedocs.io/en/latest/discord.html
 - Postgres installed with user and database setup. Currently we are developing and testing our code using Postgres 13. https://www.postgresql.org/download/
