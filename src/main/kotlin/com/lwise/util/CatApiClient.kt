@@ -13,7 +13,7 @@ object CatApiClient {
         ignoreIfMissing = true
     }
 
-    val API_KEY = dotenv["DATABASE_URL"]
+    val API_KEY = dotenv["CAT_API_KEY"]
 
     var client = OkHttpClient()
 

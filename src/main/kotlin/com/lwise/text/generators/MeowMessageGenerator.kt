@@ -5,7 +5,7 @@ import kotlin.random.Random
 class MeowMessageGenerator {
 
     val meowMessage = listOf<String>("meow", "nya", "miaou", "miao", "mew", "miau", "miaow", "mnou")
-    val preMessage = listOf<String>("...", "~~~~ ", "<3 ")
+    val preMessage = listOf<String>("...", "~~~~ ", "<3 ", ":3  ")
     val postMessage = listOf<String>(
         "  (づ｡◕‿‿◕｡)づ", " ≧◡≦", "!!", "!", "...", " /ᐠ｡ꞈ｡ᐟ\\\\ ", "  /ᐠ｡‸｡ᐟ\\\\ ", " /ᐠ｡ꞈ｡ᐟ✿\\\\ ",
         " /ᐠ｡ꞈ｡ᐟ❁\\\\∫", " /ᐠ｡▿｡ᐟ\\\\ *ᵖᵘʳʳ*", " /ᐠ｡ﻌ｡ᐟ\\\\", " /ᐠ.ꞈ.ᐟ\\\\", " ✧/ᐠ-ꞈ-ᐟ\\\\ ", " (^..^)ﾉ",
