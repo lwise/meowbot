@@ -85,7 +85,7 @@ fun GatewayDiscordClient.launchDatabaseSyncRoutine(timeInterval: Long) {
     val job = CoroutineScope(Dispatchers.IO).launchPeriodicAsync(timeInterval) {
         val usersQuery = "SELECT * FROM users;"
         val users = DatabaseClient.query(usersQuery, UserDataListTransformer())!!
-        eventDispatcher.publish(DatabaseSyncEvent(this, ShardInfo.create(0, 1), Snowflake.of("489615317534769162"), users))
+        eventDispatcher.publish(DatabaseSyncEvent(this, ShardInfo.create(0, 1), Snowflake.of(ConfigUtil.guildId), users))
     }
 }
 
