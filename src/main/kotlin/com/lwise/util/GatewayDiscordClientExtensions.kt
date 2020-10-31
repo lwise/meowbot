@@ -103,12 +103,12 @@ fun GatewayDiscordClient.subscribeToDatabaseSync() {
                     .map { role ->
                         role.name
                     }.filter { roleName ->
-                        AlignmentDefinitions.ALIGNMENT_ROLES.keys.contains(roleName)
+                        ConfigUtil.alignmentRoles.keys.contains(roleName)
                     }.collectList()
                 usersCurrentAlignmentRole.block()!!.firstOrNull()?.let { currentRole ->
                     if (alignmentRole != currentRole) {
-                        member.removeRole(Snowflake.of(AlignmentDefinitions.ALIGNMENT_ROLES[currentRole])).block()
-                        member.addRole(Snowflake.of(AlignmentDefinitions.ALIGNMENT_ROLES[alignmentRole])).block()
+                        member.removeRole(Snowflake.of(ConfigUtil.alignmentRoles[currentRole])).block()
+                        member.addRole(Snowflake.of(ConfigUtil.alignmentRoles[alignmentRole])).block()
                     }
                 }
             }
