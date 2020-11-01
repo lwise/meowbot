@@ -1,5 +1,5 @@
 ## MeowBot
-![build](https://github.com/lwise/meowbot/workflows/MeowBot%20CI/badge.svg) [![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
+![build](https://github.com/lwise/meowbot/workflows/MeowBot%20CI/badge.svg) [![Kotlin version badge](https://img.shields.io/badge/kotlin-1.4.0-blue.svg)](http://kotlinlang.org/) [![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
 
 
 ### Implemented Features
