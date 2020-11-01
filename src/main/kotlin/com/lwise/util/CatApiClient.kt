@@ -47,7 +47,7 @@ object CatApiClient {
         } catch (e: IOException) {
             logException(this::class.java.name, "Cannot retrieve image from: $queryImageUrl", e)
 
-            return "Cannot retrieve cat pic <:cri:698738886293323786>"
+            return "Cannot retrieve cat pic ${ConfigUtil.emoji["crying"]}"
         }
     }
 }

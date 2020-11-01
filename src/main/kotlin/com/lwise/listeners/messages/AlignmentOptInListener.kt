@@ -15,8 +15,8 @@ class AlignmentOptInListener : MessageListener {
         return content.equals(regexString, ignoreCase = true)
     }
 
-    override fun getResponseMessage() = "<:hello:698742819933913139> welcome to the alignment game~!"
-    private fun getFailureResponseMessage() = "it looks like you are already participating in the alignment game <:yespls:698742820273651773>"
+    override fun getResponseMessage() = "${ConfigUtil.emoji["hello"]} welcome to the alignment game~!"
+    private fun getFailureResponseMessage() = "it looks like you are already participating in the alignment game ${ConfigUtil.emoji["happyCat"]}"
 
     override fun respond(responseVector: MessageEvent): Mono<Message> {
         val userToOptIn = responseVector.author
