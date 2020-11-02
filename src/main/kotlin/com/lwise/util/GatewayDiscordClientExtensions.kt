@@ -85,7 +85,7 @@ fun GatewayDiscordClient.launchDatabaseSyncRoutine(timeInterval: Long) {
     val job = CoroutineScope(Dispatchers.IO).launchPeriodicAsync(timeInterval) {
         val usersQuery = "SELECT * FROM users;"
         val users = DatabaseClient.query(usersQuery, UserDataListTransformer())!!
-        eventDispatcher.publish(DatabaseSyncEvent(this, ShardInfo.create(0, 1), Snowflake.of("489615317534769162"), users))
+        eventDispatcher.publish(DatabaseSyncEvent(this, ShardInfo.create(0, 1), Snowflake.of(ConfigUtil.guildId), users))
     }
 }
 
@@ -103,12 +103,12 @@ fun GatewayDiscordClient.subscribeToDatabaseSync() {
                     .map { role ->
                         role.name
                     }.filter { roleName ->
-                        AlignmentDefinitions.ALIGNMENT_ROLES.keys.contains(roleName)
+                        ConfigUtil.alignmentRoles.keys.contains(roleName)
                     }.collectList()
                 usersCurrentAlignmentRole.block()!!.firstOrNull()?.let { currentRole ->
                     if (alignmentRole != currentRole) {
-                        member.removeRole(Snowflake.of(AlignmentDefinitions.ALIGNMENT_ROLES[currentRole])).block()
-                        member.addRole(Snowflake.of(AlignmentDefinitions.ALIGNMENT_ROLES[alignmentRole])).block()
+                        member.removeRole(Snowflake.of(ConfigUtil.alignmentRoles[currentRole])).block()
+                        member.addRole(Snowflake.of(ConfigUtil.alignmentRoles[alignmentRole])).block()
                     }
                 }
             }

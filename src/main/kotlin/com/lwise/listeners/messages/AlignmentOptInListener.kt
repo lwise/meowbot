@@ -1,7 +1,7 @@
 package com.lwise.listeners.messages
 
-import com.lwise.alignment.AlignmentDefinitions.Companion.ALIGNMENT_ROLES
 import com.lwise.types.events.MessageEvent
+import com.lwise.util.ConfigUtil
 import com.lwise.util.DatabaseClient
 import discord4j.common.util.Snowflake
 import discord4j.core.`object`.entity.Message
@@ -15,8 +15,8 @@ class AlignmentOptInListener : MessageListener {
         return content.equals(regexString, ignoreCase = true)
     }
 
-    override fun getResponseMessage() = "<:hello:698742819933913139> welcome to the alignment game~!"
-    private fun getFailureResponseMessage() = "it looks like you are already participating in the alignment game <:yespls:698742820273651773>"
+    override fun getResponseMessage() = "${ConfigUtil.emoji["hello"]} welcome to the alignment game~!"
+    private fun getFailureResponseMessage() = "it looks like you are already participating in the alignment game ${ConfigUtil.emoji["happyCat"]}"
 
     override fun respond(responseVector: MessageEvent): Mono<Message> {
         val userToOptIn = responseVector.author
@@ -24,7 +24,7 @@ class AlignmentOptInListener : MessageListener {
             .map { role ->
                 role.name
             }.filter { roleName ->
-                ALIGNMENT_ROLES.keys.contains(roleName)
+                ConfigUtil.alignmentRoles.keys.contains(roleName)
             }.collectList()
         val filteredRoles = userAlignmentRoles.block()!!
         return if (!filteredRoles.isNullOrEmpty()) {
@@ -40,7 +40,7 @@ class AlignmentOptInListener : MessageListener {
             DatabaseClient.update(userQuery)
 
             // give the user the True Neutral role to start
-            userToOptIn.addRole(Snowflake.of("769424037201444944")).block()
+            userToOptIn.addRole(Snowflake.of(ConfigUtil.alignmentRoles["True Neutral"])).block()
             super.respond(responseVector)
         }
     }
