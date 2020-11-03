@@ -17,27 +17,33 @@ import discord4j.core.DiscordClientBuilder
 import io.github.cdimascio.dotenv.dotenv
 
 fun main() {
-    val dotenv = dotenv {
-        ignoreIfMissing = true
-    }
-    val client = DiscordClientBuilder.create(dotenv["BOT_TOKEN"] ?: System.getenv("BOT_TOKEN"))
-        .build()
-        .login()
-        .block()
+    MeowBot().runBot()
+}
 
-    // test the database connection
-    val result = DatabaseClient.query("SELECT * FROM pg_catalog.pg_tables;", TableTransformer())
-    log("MAIN", result.toString())
+class MeowBot {
+    fun runBot() {
+        val dotenv = dotenv {
+            ignoreIfMissing = true
+        }
+        val client = DiscordClientBuilder.create(dotenv["BOT_TOKEN"] ?: System.getenv("BOT_TOKEN"))
+            .build()
+            .login()
+            .block()
 
-    val messageListeners = listOf(MeowListener(), AlignmentOptInListener(), CatPictureListener())
-    val reactionListeners = listOf(AlignmentReactionListener())
-    client?.apply {
-        subscribeToReady()
-        subscribeToMessages(messageListeners)
-        subscribeToReactionAdds(reactionListeners)
-        subscribeToReactionRemoves(reactionListeners)
-        subscribeToDatabaseSync()
-        launchDatabaseSyncRoutine(300000) // 5 minutes
-        onDisconnect().block()
+        // test the database connection
+        val result = DatabaseClient.query("SELECT * FROM pg_catalog.pg_tables;", TableTransformer())
+        log("MAIN", result.toString())
+
+        val messageListeners = listOf(MeowListener(), AlignmentOptInListener(), CatPictureListener())
+        val reactionListeners = listOf(AlignmentReactionListener())
+        client?.apply {
+            subscribeToReady()
+            subscribeToMessages(messageListeners)
+            subscribeToReactionAdds(reactionListeners)
+            subscribeToReactionRemoves(reactionListeners)
+            subscribeToDatabaseSync()
+            launchDatabaseSyncRoutine(300000) // 5 minutes
+            onDisconnect().block()
+        }
     }
 }
