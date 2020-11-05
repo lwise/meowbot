@@ -5,7 +5,7 @@ import com.lwise.util.log
 class AlignmentDefinitions {
     companion object {
         val EMOJI_NAMES = listOf("lawful", "chaotic", "good", "evil")
-        private const val ARBITRARY_ALIGNMENT_THRESHOLD = 20
+        private const val ARBITRARY_ALIGNMENT_THRESHOLD = 15
 
         fun calculateRole(chaotic: Int, lawful: Int, good: Int, evil: Int): String {
             val goodnessPoints = good - evil
