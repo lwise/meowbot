@@ -23,6 +23,27 @@ jobs:
         uses: fwilhe2/setup-kotlin@main
       - name: Run MeowBot tests
         run: ./gradlew test
+
+  integrationTest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Kotlin
+        uses: fwilhe2/setup-kotlin@main
+      - name: Build MeowBot jar
+        run: ./gradlew jar
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+      - name: Run MeowBot
+        run: java -jar build/libs/MeowBot-0.0.1.jar &
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+      - name: Run integrated tests
+        run: ./gradlew integrationTest
+        env:
+          TESTER_BOT_TOKEN: ${{ secrets.TESTER_BOT_TOKEN }}
+          TEST_CHANNEL_ID: ${{ secrets.TEST_CHANNEL_ID }}
+
   lint:
     runs-on: ubuntu-latest
     steps:
