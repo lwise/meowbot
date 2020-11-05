@@ -27,6 +27,24 @@ jar {
     }
 }
 
+test {
+    useJUnitPlatform()
+}
+
+sourceSets {
+    integrationTest {
+        kotlin.srcDir "$projectDir/src/integrationTest/groovy"
+        resources.srcDir "$projectDir/src/integrationTest/resources"
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output
+    }
+}
+
+configurations {
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntime.extendsFrom testRuntime
+}
+
 dependencies {
     implementation "com.oracle.ojdbc:ojdbc8:19.3.0.0"
     implementation "io.github.cdimascio:dotenv-kotlin:6.2.2"
@@ -38,6 +56,21 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
     compile 'org.json:json:20190722'
 
-    testImplementation("junit:junit:4.13")
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testImplementation 'org.hamcrest:hamcrest:2.2'
+    testImplementation 'org.hamcrest:hamcrest-library:2.2'
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.4.2")
+
+    integrationTestCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.7.0'
 
 }
+
+task integrationTest(type: Test) {
+    description = "Runs integration tests."
+    group = 'verification'
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    useJUnitPlatform()
+}
+
+check.dependsOn integrationTest
