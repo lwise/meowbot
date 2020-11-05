@@ -72,5 +72,3 @@ task integrationTest(type: Test) {
     classpath = sourceSets.integrationTest.runtimeClasspath
     useJUnitPlatform()
 }
-
-check.dependsOn integrationTest
