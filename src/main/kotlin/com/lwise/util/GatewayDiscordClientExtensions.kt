@@ -32,8 +32,8 @@ fun GatewayDiscordClient.subscribeToMessages(listeners: List<MessageListener>) {
     var listener: MessageListener? = null
     eventDispatcher.on(MessageCreateEvent::class.java)
         .filter { event ->
-            // don't respond to messages from other bots
-            event.message.author.map { !it.isBot }.orElse(false)
+            // don't respond to messages from self
+            event.message.author.map { it.id != selfId }.orElse(false)
         }
         .filter { event ->
             listener = listeners.firstOrNull { it.isTriggered(event.message.content) }
