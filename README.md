@@ -24,5 +24,7 @@ DATABASE_URL=<postgres url>
 CAT_API_KEY=<thecatapi.com key>
 ```
 
+If you want to run MeowBot on your server you will also need to replace the values in `config.properties` with those from your own server.
+
 #### Running Meowbot:
 Run the application from `src/main/kotlin/com/lwise/MeowBot.kt`. 
