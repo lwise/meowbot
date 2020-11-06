@@ -8,6 +8,6 @@ class CatPictureListenerTest : IntegratedTest() {
     @Test
     fun `MeowBot responds to the command m!pic with a cat picture from the cat api`() {
         testerBot.sendMessage("m!pic")
-        assertThat(testerBot.getLastMessage(), StringContains.containsString("thecatapi.com"))
+        assertThat(testerBot.getLastMessage(1000), StringContains.containsString("thecatapi.com"))
     }
 }

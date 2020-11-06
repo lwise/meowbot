@@ -39,7 +39,7 @@ class MeowListenerTest : IntegratedTest() {
     }
 
     @Test
-    fun `meowBot responds to a message with a meow at the end`() {
+    fun `MeowBot responds to a message with a meow at the end`() {
         testerBot.sendMessage("MeowBot help I am sad meow")
         assertThat(testerBot.getLastMessage(), meowMatcher)
     }

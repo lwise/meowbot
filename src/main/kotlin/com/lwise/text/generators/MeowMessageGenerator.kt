@@ -4,9 +4,9 @@ import kotlin.random.Random
 
 class MeowMessageGenerator {
 
-    val meowMessage = listOf<String>("meow", "nya", "miaou", "miao", "mew", "miau", "miaow", "mnou")
-    val preMessage = listOf<String>("...", "~~~~ ", "<3 ", ":3  ")
-    val postMessage = listOf<String>(
+    private val meowMessage = listOf("meow", "nya", "miaou", "miao", "mew", "miau", "miaow", "mnou")
+    private val preMessage = listOf("...", "~~~~ ", "<3 ", ":3  ")
+    private val postMessage = listOf(
         "  (づ｡◕‿‿◕｡)づ", " ≧◡≦", "!!", "!", "...", " /ᐠ｡ꞈ｡ᐟ\\\\ ", "  /ᐠ｡‸｡ᐟ\\\\ ", " /ᐠ｡ꞈ｡ᐟ✿\\\\ ",
         " /ᐠ｡ꞈ｡ᐟ❁\\\\∫", " /ᐠ｡▿｡ᐟ\\\\ *ᵖᵘʳʳ*", " /ᐠ｡ﻌ｡ᐟ\\\\", " /ᐠ.ꞈ.ᐟ\\\\", " ✧/ᐠ-ꞈ-ᐟ\\\\ ", " (^..^)ﾉ",
         " /ᐠ. ⱉ .ᐟ\\\\ﾉ   ", " /ᐠ｡ⱉ｡ᐟ\\\\ﾉ ᶠᵉᵉᵈ ᵐᵉ", "~~~", "!!!", ".......", "!", "~~~", "/ᐠ｡ퟑ｡ᐟ\\\\",
@@ -14,16 +14,16 @@ class MeowMessageGenerator {
     )
 
     fun generateText(usePrefix: Boolean = true, usePostfix: Boolean = true): String {
-        val arguments: MutableList<String> = mutableListOf<String>()
+        val arguments: MutableList<String> = mutableListOf()
 
         if (usePrefix && Random.nextInt(2) == 1) {
-            arguments.add(preMessage.get(Random.nextInt(preMessage.size)))
+            arguments.add(preMessage[Random.nextInt(preMessage.size)])
         }
 
-        arguments.add(meowMessage.get(Random.nextInt(meowMessage.size)))
+        arguments.add(meowMessage[Random.nextInt(meowMessage.size)])
 
         if (usePostfix && Random.nextInt(2) == 1) {
-            arguments.add(postMessage.get(Random.nextInt(postMessage.size)))
+            arguments.add(postMessage[Random.nextInt(postMessage.size)])
         }
 
         return arguments.joinToString(separator = "")
