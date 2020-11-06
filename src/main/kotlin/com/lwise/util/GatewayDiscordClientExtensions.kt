@@ -51,7 +51,7 @@ fun GatewayDiscordClient.subscribeToReactionAdds(listeners: List<ReactionListene
     eventDispatcher.on(ReactionAddEvent::class.java)
         .filter { it.emoji.asCustomEmoji().isPresent }
         .filter { event ->
-            event.emoji.asCustomEmoji().get().name.let { name ->
+            event.emoji.asCustomEmoji().takeIf { it.isPresent }?.get()?.name?.let { name ->
                 listener = listeners.firstOrNull { it.isTriggered(name) }
             }
             listener != null
@@ -68,7 +68,7 @@ fun GatewayDiscordClient.subscribeToReactionRemoves(listeners: List<ReactionList
     eventDispatcher.on(ReactionRemoveEvent::class.java)
         .filter { it.emoji.asCustomEmoji().isPresent }
         .filter { event ->
-            event.emoji.asCustomEmoji().get().name.let { name ->
+            event.emoji.asCustomEmoji().takeIf { it.isPresent }?.get()?.name?.let { name ->
                 listener = listeners.firstOrNull { it.isTriggered(name) }
             }
             listener != null

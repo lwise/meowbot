@@ -20,7 +20,7 @@ data class ReactionEvent(
     val emoji: ReactionEmoji,
     val message: Message,
     val reactingUser: User,
-    val userReactedTo: User,
+    val userReactedTo: User?,
     val eventType: ReactionEventType
 )
 
@@ -28,7 +28,7 @@ data class MessageEvent(
     val message: Message,
     val guild: Guild,
     val channel: MessageChannel,
-    val author: Member
+    val author: Member?
 )
 
 fun ReactionAddEvent.toReactionAddEvent(): ReactionEvent {
@@ -38,7 +38,7 @@ fun ReactionAddEvent.toReactionAddEvent(): ReactionEvent {
         emoji = emoji,
         message = messageData,
         reactingUser = user.block()!!,
-        userReactedTo = messageData.author.get(),
+        userReactedTo = messageData.author.takeIf { it.isPresent }?.get(),
         eventType = ReactionEventType.ADDED
     )
 }
@@ -50,7 +50,7 @@ fun ReactionRemoveEvent.toReactionRemoveEvent(): ReactionEvent {
         emoji = emoji,
         message = messageData,
         reactingUser = user.block()!!,
-        userReactedTo = messageData.author.get(),
+        userReactedTo = messageData.author.takeIf { it.isPresent }?.get(),
         eventType = ReactionEventType.REMOVED
     )
 }
@@ -60,6 +60,6 @@ fun MessageCreateEvent.toMessageEvent(): MessageEvent {
         message = message,
         guild = guild.block()!!,
         channel = message.channel.block()!!,
-        author = member.get()
+        author = member.takeIf { it.isPresent }?.get()
     )
 }

@@ -20,6 +20,10 @@ class AlignmentOptInListener : MessageListener {
 
     override fun respond(responseVector: MessageEvent): Mono<Message> {
         val userToOptIn = responseVector.author
+        if (userToOptIn == null) {
+            responseVector.channel.createMessage("something went wrong ${ConfigUtil.emoji["crying"]}")
+            return Mono.empty()
+        }
         val userAlignmentRoles = userToOptIn.roles
             .map { role ->
                 role.name
