@@ -16,8 +16,8 @@ class TesterBot {
         (client!!.getChannelById(testChannelId).block() as MessageChannel).createMessage(message).block()
     }
 
-    fun getLastMessage(): String? {
-        Thread.sleep(500)
+    fun getLastMessage(delay: Long? = null): String? {
+        Thread.sleep(delay ?: 500)
         val message = (client!!.getChannelById(testChannelId).block() as MessageChannel).lastMessage.block()!!
         return if (message.author.get().id == client.selfId) null else message.content
     }

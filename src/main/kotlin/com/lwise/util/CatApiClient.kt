@@ -9,15 +9,15 @@ import java.io.IOException
 
 object CatApiClient {
 
-    val dotenv = dotenv {
+    private val dotenv = dotenv {
         ignoreIfMissing = true
     }
 
-    val API_KEY = dotenv["CAT_API_KEY"]
+    private val API_KEY = dotenv["CAT_API_KEY"]
 
-    var client = OkHttpClient()
+    private var client = OkHttpClient()
 
-    val base_url = HttpUrl.Builder()
+    private val base_url = HttpUrl.Builder()
         .scheme("https")
         .host("api.thecatapi.com")
         .addPathSegment("v1")
