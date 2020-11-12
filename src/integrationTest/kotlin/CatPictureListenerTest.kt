@@ -1,5 +1,6 @@
-package integrated.tester
+package integrated
 
+import integrated.tester.IntegratedTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.StringContains
 import org.junit.jupiter.api.Test
