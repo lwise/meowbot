@@ -1,5 +1,6 @@
 package com.lwise
 
+import com.lwise.listeners.messages.AdviceListener
 import com.lwise.listeners.messages.AlignmentOptInListener
 import com.lwise.listeners.messages.CatPictureListener
 import com.lwise.listeners.messages.MeowListener
@@ -22,7 +23,7 @@ fun main() {
         .login()
         .block()
 
-    val messageListeners = listOf(MeowListener(), AlignmentOptInListener(), CatPictureListener())
+    val messageListeners = listOf(MeowListener(), AlignmentOptInListener(), CatPictureListener(), AdviceListener())
     val reactionListeners = listOf(AlignmentReactionListener())
     client?.apply {
         subscribeToReady()
