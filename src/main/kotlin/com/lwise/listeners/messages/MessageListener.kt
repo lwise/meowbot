@@ -15,7 +15,7 @@ interface MessageListener : Listener<MessageEvent> {
     }
 
     override fun respond(responseVector: MessageEvent): Mono<Message> {
-        getResponseMessage().takeIf { it.isNotEmpty() }?.let {
+        getResponseMessage().takeIf { it.isNotEmpty() && it.isNotBlank() }?.let {
             return responseVector.channel.createMessage(it)
         }
         return Mono.empty()
