@@ -6,5 +6,6 @@ data class UserData(
     val chaoticPoints: Int,
     val lawfulPoints: Int,
     val goodPoints: Int,
-    val evilPoints: Int
+    val evilPoints: Int,
+    val fishPoints: Int
 )

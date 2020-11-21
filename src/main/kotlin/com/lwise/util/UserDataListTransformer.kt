@@ -14,7 +14,8 @@ class UserDataListTransformer : ResultTransformer<List<UserData>> {
                     chaoticPoints = resultSet.getInt("chaotic_points"),
                     lawfulPoints = resultSet.getInt("lawful_points"),
                     goodPoints = resultSet.getInt("good_points"),
-                    evilPoints = resultSet.getInt("evil_points")
+                    evilPoints = resultSet.getInt("evil_points"),
+                    fishPoints = resultSet.getInt("fish_points")
                 )
             )
         }
