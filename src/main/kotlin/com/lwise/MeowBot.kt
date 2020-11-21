@@ -5,6 +5,7 @@ import com.lwise.listeners.messages.AlignmentOptInListener
 import com.lwise.listeners.messages.CatPictureListener
 import com.lwise.listeners.messages.MeowListener
 import com.lwise.listeners.reactions.AlignmentReactionListener
+import com.lwise.listeners.reactions.FishReactionListener
 import com.lwise.util.launchDatabaseSyncRoutine
 import com.lwise.util.subscribeToDatabaseSync
 import com.lwise.util.subscribeToMessages
@@ -24,7 +25,7 @@ fun main() {
         .block()
 
     val messageListeners = listOf(MeowListener(), AlignmentOptInListener(), CatPictureListener(), AdviceListener())
-    val reactionListeners = listOf(AlignmentReactionListener())
+    val reactionListeners = listOf(AlignmentReactionListener(), FishReactionListener())
     client?.apply {
         subscribeToReady()
         subscribeToMessages(messageListeners)
