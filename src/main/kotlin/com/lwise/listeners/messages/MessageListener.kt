@@ -15,7 +15,10 @@ interface MessageListener : Listener<MessageEvent> {
     }
 
     override fun respond(responseVector: MessageEvent): Mono<Message> {
-        return responseVector.channel.createMessage(getResponseMessage())
+        getResponseMessage().takeIf { it.isNotEmpty() }?.let {
+            return responseVector.channel.createMessage(it)
+        }
+        return Mono.empty()
     }
 
     fun getResponseMessage(): String
