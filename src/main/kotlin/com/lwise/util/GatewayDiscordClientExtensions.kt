@@ -49,9 +49,12 @@ fun GatewayDiscordClient.subscribeToMessages(listeners: List<MessageListener>) {
 fun GatewayDiscordClient.subscribeToReactionAdds(listeners: List<ReactionListener>) {
     var listener: ReactionListener? = null
     eventDispatcher.on(ReactionAddEvent::class.java)
-        .filter { it.emoji.asCustomEmoji().isPresent }
+        .filter { it.emoji.asCustomEmoji().isPresent || it.emoji.asUnicodeEmoji().isPresent }
         .filter { event ->
             event.emoji.asCustomEmoji().takeIf { it.isPresent }?.get()?.name?.let { name ->
+                listener = listeners.firstOrNull { it.isTriggered(name) }
+            }
+            event.emoji.asUnicodeEmoji().takeIf { it.isPresent }?.get()?.raw?.let { name ->
                 listener = listeners.firstOrNull { it.isTriggered(name) }
             }
             listener != null

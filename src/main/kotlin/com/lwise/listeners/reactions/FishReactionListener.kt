@@ -8,7 +8,7 @@ import reactor.core.publisher.Mono
 
 class FishReactionListener : ReactionListener {
     override fun isTriggered(content: String): Boolean {
-        return content == "fish"
+        return content == "\uD83D\uDC1F" // fish emoji unicode
     }
 
     override fun respond(responseVector: ReactionEvent): Mono<Message> {
@@ -18,8 +18,12 @@ class FishReactionListener : ReactionListener {
             val userFromDatabase = DatabaseClient.query(userFetchQuery, UserDataTransformer())
             userFromDatabase?.let { user ->
                 val newPoints = user.fishPoints + 1
-                val userUpdateQuery = "UPDATE users SET fish_points = $newPoints WHERE id = '${userToGiveFishPointsTo.id}';"
+                val userUpdateQuery = "UPDATE users SET fish_points = $newPoints WHERE id = '${userToGiveFishPointsTo.id.asBigInteger()}';"
                 DatabaseClient.update(userUpdateQuery)
+            } ?: run {
+                // user isn't in the database yet
+                val userQuery = "INSERT INTO users (id, username, fish_points) VALUES (${userToGiveFishPointsTo.id.asBigInteger()}, '${userToGiveFishPointsTo.username}', 1) ON CONFLICT DO NOTHING;"
+                DatabaseClient.update(userQuery)
             }
         }
         return Mono.empty()
