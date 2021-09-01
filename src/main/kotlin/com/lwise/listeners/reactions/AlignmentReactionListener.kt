@@ -19,6 +19,13 @@ class AlignmentReactionListener : ReactionListener {
     override fun respond(responseVector: ReactionEvent): Mono<Message> {
         val discordUserToUpdate = responseVector.userReactedTo ?: return Mono.empty()
         val userFetchQuery = "SELECT * FROM users WHERE username = '${discordUserToUpdate.username}';"
+
+        // prevent people from voting themselves
+        if (discordUserToUpdate == responseVector.reactingUser) {
+            return Mono.empty()
+        }
+
+        // else continue and update database
         val userFromDatabase = DatabaseClient.query(userFetchQuery, UserDataTransformer())
 
         userFromDatabase?.let { user ->
