@@ -53,6 +53,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install ktlint
-        run: brew install -s ktlint
+        run: brew install --build-from-source ktlint
       - name: Run ktlint
         run: ./gradlew ktlintCheck
