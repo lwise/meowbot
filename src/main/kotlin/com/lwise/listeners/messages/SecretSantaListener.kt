@@ -43,9 +43,9 @@ class SecretSantaListener : MessageListener {
                 it.privateChannel.subscribe {
                     it
                         .createMessage(
-                            "Miao!!  " +  " /ᐠ｡ﻌ｡ᐟ\\\\" + "  !! Human Secret Santa: " + senderNickName + ",\n" +
+                            "Miao!!  " + " /ᐠ｡ﻌ｡ᐟ\\\\" + "  !! Human Secret Santa: " + senderNickName + ",\n" +
                                 "The destined person that you MUST SEND A GIFT TO is " + receiverNickName + " !!" +
-                                "\n\n ......DO IT OR ELSE!!!!!" +  "  \\\\/ᐠ-ᆽ-ᐟ \\\\ "
+                                "\n\n ......DO IT OR ELSE!!!!!" + "  \\\\/ᐠ-ᆽ-ᐟ \\\\ "
                         )
                         .subscribe()
                 }
