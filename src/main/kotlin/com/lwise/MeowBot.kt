@@ -16,12 +16,10 @@ import com.lwise.util.subscribeToReady
 import discord4j.core.DiscordClientBuilder
 import io.github.cdimascio.dotenv.dotenv
 
-object MeowBot {
-
+fun main() {
     val dotenv = dotenv {
         ignoreIfMissing = true
     }
-
     val client = DiscordClientBuilder.create(dotenv["BOT_TOKEN"] ?: System.getenv("BOT_TOKEN"))
         .build()
         .login()
@@ -35,20 +33,13 @@ object MeowBot {
         SecretSantaListener()
     )
     val reactionListeners = listOf(AlignmentReactionListener(), FishReactionListener())
-
-    fun initializeMeowBot() {
-        client?.apply {
-            subscribeToReady()
-            subscribeToMessages(messageListeners)
-            subscribeToReactionAdds(reactionListeners)
-            subscribeToReactionRemoves(reactionListeners)
-            subscribeToDatabaseSync()
-            launchDatabaseSyncRoutine(300000) // 5 minutes
-            onDisconnect().block()
-        }
+    client?.apply {
+        subscribeToReady()
+        subscribeToMessages(messageListeners)
+        subscribeToReactionAdds(reactionListeners)
+        subscribeToReactionRemoves(reactionListeners)
+        subscribeToDatabaseSync()
+        launchDatabaseSyncRoutine(300000) // 5 minutes
+        onDisconnect().block()
     }
-}
-
-fun main() {
-    MeowBot.initializeMeowBot()
 }
