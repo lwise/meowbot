@@ -24,6 +24,26 @@ DATABASE_URL=<postgres url>
 CAT_API_KEY=<thecatapi.com key>
 ```
 
+#### Setting up your test DB
+You can use this to set up your local `users` table for Meowbot:
+```sql
+CREATE TABLE users (
+  id bigint PRIMARY KEY NOT NULL,
+  username varchar(32) NOT NULL,
+  chaotic_points integer NOT NULL DEFAULT 0,
+  lawful_points integer NOT NULL DEFAULT 0,
+  good_points integer NOT NULL DEFAULT 0,
+  evil_points integer NOT NULL DEFAULT 0,
+  fish_points integer NOT NULL DEFAULT 0
+);
+```
+
+Then, where `<your_id>` is your user id on discord and `<your_name>` is your Discord username WITHOUT the trailing numbers...
+
+```sql
+INSERT INTO users (id, username) VALUES (<your_id>, '<your_name>');
+```
+
 If you want to run MeowBot on your server you will also need to replace the values in `config.properties` with those from your own server.
 
 #### Running Meowbot:
