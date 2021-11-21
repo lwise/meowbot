@@ -35,6 +35,10 @@ object MusicPlayer {
         playerManager.loadItemOrdered(this, url, ResultHandler())
     }
 
+    fun removeTrackFromQueue(index: Int): String? {
+        return trackScheduler.removeFromQueue(index)?.toDescriptionString()
+    }
+
     fun getQueueDataAsStringList(fromIndex: Int, toIndex: Int): List<String> {
         return trackScheduler.getQueueTrackList().safeSubList(fromIndex, toIndex).mapIndexed { index, track ->
             track.toStringWithIndex(index)
@@ -43,6 +47,10 @@ object MusicPlayer {
 
     fun getNowPlayingAsString(): String? {
         return player.playingTrack?.toDescriptionString()
+    }
+
+    fun clearQueue() {
+        trackScheduler.clearQueue()
     }
 
     private fun AudioTrack.toStringWithIndex(index: Int): String {

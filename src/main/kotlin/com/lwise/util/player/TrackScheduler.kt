@@ -1,5 +1,6 @@
 package com.lwise.util.player
 
+import com.lwise.util.log
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
@@ -22,8 +23,22 @@ class TrackScheduler(private val player: AudioPlayer) : AudioEventAdapter() {
         }
     }
 
+    fun removeFromQueue(index: Int): AudioTrack? {
+        val removed = if (index >= 0 && index < queue.size) {
+            val trackToRemove = queue.toList()[index]
+            queue.remove(trackToRemove)
+            trackToRemove
+        } else null
+        log("meow", "${removed?.info?.title}")
+        return removed
+    }
+
     fun getQueueTrackList(): List<AudioTrack> {
         return queue.toList()
+    }
+
+    fun clearQueue() {
+        queue.clear()
     }
 
     private fun nextTrack() {
