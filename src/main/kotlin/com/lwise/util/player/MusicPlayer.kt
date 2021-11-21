@@ -1,5 +1,6 @@
 package com.lwise.util.player
 
+import com.lwise.util.safeSubList
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager
@@ -16,6 +17,8 @@ object MusicPlayer {
     private val playerManager: AudioPlayerManager
     private val trackScheduler: TrackScheduler
     val audioProvider: AudioProvider
+    val isEmpty: Boolean
+        get() = trackScheduler.isEmpty
 
     init {
         playerManager = DefaultAudioPlayerManager()
@@ -30,6 +33,24 @@ object MusicPlayer {
 
     fun addTrackToQueue(url: String) {
         playerManager.loadItemOrdered(this, url, ResultHandler())
+    }
+
+    fun getQueueDataAsStringList(fromIndex: Int, toIndex: Int): List<String> {
+        return trackScheduler.getQueueTrackList().safeSubList(fromIndex, toIndex).mapIndexed { index, track ->
+            track.toStringWithIndex(index)
+        }
+    }
+
+    fun getNowPlayingAsString(): String? {
+        return player.playingTrack?.toDescriptionString()
+    }
+
+    private fun AudioTrack.toStringWithIndex(index: Int): String {
+        return "${index + 1}. ${toDescriptionString()}"
+    }
+
+    private fun AudioTrack.toDescriptionString(): String {
+        return info.title
     }
 
     private fun play(track: AudioTrack) {

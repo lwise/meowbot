@@ -9,6 +9,8 @@ import java.util.concurrent.LinkedBlockingQueue
 
 class TrackScheduler(private val player: AudioPlayer) : AudioEventAdapter() {
     private val queue: BlockingQueue<AudioTrack>
+    val isEmpty: Boolean
+        get() = queue.isEmpty()
 
     init {
         queue = LinkedBlockingQueue()
@@ -18,6 +20,10 @@ class TrackScheduler(private val player: AudioPlayer) : AudioEventAdapter() {
         if (!player.startTrack(track, true)) {
             queue.offer(track)
         }
+    }
+
+    fun getQueueTrackList(): List<AudioTrack> {
+        return queue.toList()
     }
 
     private fun nextTrack() {
