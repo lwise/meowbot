@@ -7,7 +7,6 @@ import com.lwise.listeners.messages.MeowListener
 import com.lwise.listeners.messages.QueueSongListener
 import com.lwise.listeners.messages.SecretSantaListener
 import com.lwise.listeners.messages.VoiceJoinListener
-
 import com.lwise.listeners.reactions.AlignmentReactionListener
 import com.lwise.listeners.reactions.FishReactionListener
 import com.lwise.util.launchDatabaseSyncRoutine
@@ -40,10 +39,10 @@ fun main() {
         CatPictureListener(),
         AdviceListener(),
         SecretSantaListener(),
-        VoiceJoinListener(), 
+        VoiceJoinListener(),
         QueueSongListener()
     )
-    
+
     val reactionListeners = listOf(AlignmentReactionListener(), FishReactionListener())
     client?.apply {
         subscribeToReady()
