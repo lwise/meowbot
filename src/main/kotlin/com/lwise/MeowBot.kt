@@ -3,8 +3,10 @@ package com.lwise
 import com.lwise.listeners.messages.AdviceListener
 import com.lwise.listeners.messages.AlignmentOptInListener
 import com.lwise.listeners.messages.CatPictureListener
+import com.lwise.listeners.messages.ClearQueueListener
 import com.lwise.listeners.messages.MeowListener
 import com.lwise.listeners.messages.QueueSongListener
+import com.lwise.listeners.messages.RemoveFromQueueListener
 import com.lwise.listeners.messages.ShowQueueListener
 import com.lwise.listeners.messages.VoiceJoinListener
 import com.lwise.listeners.reactions.AlignmentReactionListener
@@ -33,7 +35,7 @@ fun main() {
         .login()
         .block()
 
-    val messageListeners = listOf(MeowListener(), AlignmentOptInListener(), CatPictureListener(), AdviceListener(), VoiceJoinListener(), QueueSongListener(), ShowQueueListener())
+    val messageListeners = listOf(MeowListener(), AlignmentOptInListener(), CatPictureListener(), AdviceListener(), VoiceJoinListener(), QueueSongListener(), ShowQueueListener(), RemoveFromQueueListener(), ClearQueueListener())
     val reactionListeners = listOf(AlignmentReactionListener(), FishReactionListener())
     client?.apply {
         subscribeToReady()
