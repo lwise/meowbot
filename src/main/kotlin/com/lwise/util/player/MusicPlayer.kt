@@ -83,8 +83,14 @@ object MusicPlayer {
         }
 
         override fun playlistLoaded(playlist: AudioPlaylist?) {
-            playlist?.tracks?.forEach { track ->
-                play(track)
+            playlist?.let {
+                if (it.isSearchResult) {
+                    play(it.tracks.first())
+                } else {
+                    it.tracks.forEach { track ->
+                        play(track)
+                    }
+                }
             }
         }
 
