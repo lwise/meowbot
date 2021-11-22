@@ -6,6 +6,7 @@
 - Meowbot will respond when you meow :3
 - [DnD Alignment Game](https://github.com/lwise/meowbot/wiki/Meowbot---DnD-Alignment-Game)
 - Use `m!pic` command to get a random cat picture! 
+- Meowbot can function as a music player
 
 ### Quick Getting Started Guide
 
