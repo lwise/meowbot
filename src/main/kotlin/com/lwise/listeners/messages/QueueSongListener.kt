@@ -1,6 +1,7 @@
 package com.lwise.listeners.messages
 
 import com.lwise.types.events.MessageEvent
+import com.lwise.util.SpotifyClient
 import com.lwise.util.asUrlOrNull
 import com.lwise.util.player.MusicPlayer
 import discord4j.core.`object`.entity.Message
@@ -14,9 +15,16 @@ class QueueSongListener : MessageListener {
 
     override fun respond(responseVector: MessageEvent): Mono<Message> {
         val messageContent = responseVector.message.content.split(" ").drop(1)
-        val firstArg = messageContent[0].asUrlOrNull()
-        val musicArg = firstArg?.toString() ?: ("ytsearch:" + messageContent.joinToString(" "))
-        MusicPlayer.addTrackToQueue(musicArg)
+        val url = messageContent[0].asUrlOrNull()
+        with(url?.toString() ?: "") {
+            when {
+                isNullOrBlank() -> MusicPlayer.addTrackToQueue("ytsearch:" + messageContent.joinToString(" "))
+                contains("spotify") -> {
+                    MusicPlayer.addTrackToQueue("ytsearch:" + SpotifyClient.getTrackInfo(url!!))
+                }
+                else -> MusicPlayer.addTrackToQueue(this)
+            }
+        }
         return Mono.empty()
     }
 }

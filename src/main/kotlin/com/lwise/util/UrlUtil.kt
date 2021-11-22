@@ -10,3 +10,8 @@ fun String.asUrlOrNull(): URL? {
         null
     }
 }
+
+fun URL.getLastPathSegment(): String {
+    val urlString = toString()
+    return urlString.substring(urlString.lastIndexOf('/') + 1)
+}
