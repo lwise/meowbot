@@ -19,6 +19,13 @@ class QueueSongListener : MessageListener {
         with(url?.toString() ?: "") {
             when {
                 isNullOrBlank() -> MusicPlayer.addTrackToQueue("ytsearch:" + messageContent.joinToString(" "))
+                contains("playlist") && contains("spotify") -> {
+                    // We need to do this async because it takes forever for long playlists
+                    SpotifyClient.getPlaylistItemsTrackInfo(url!!)?.forEach { playlistItemInfo ->
+                        // I hate that we have to query for each song, but the playlist api doesn't return artists
+                        MusicPlayer.addTrackToQueue("ytsearch:$playlistItemInfo")
+                    }
+                }
                 contains("spotify") -> {
                     MusicPlayer.addTrackToQueue("ytsearch:" + SpotifyClient.getTrackInfo(url!!))
                 }
