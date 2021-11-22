@@ -1,15 +1,7 @@
 package com.lwise
 
-import com.lwise.listeners.messages.AdviceListener
-import com.lwise.listeners.messages.AlignmentOptInListener
-import com.lwise.listeners.messages.CatPictureListener
-import com.lwise.listeners.messages.ClearQueueListener
-import com.lwise.listeners.messages.MeowListener
-import com.lwise.listeners.messages.RemoveFromQueueListener
-import com.lwise.listeners.messages.SecretSantaListener
-import com.lwise.listeners.messages.ShowQueueListener
-import com.lwise.listeners.reactions.AlignmentReactionListener
-import com.lwise.listeners.reactions.FishReactionListener
+import com.lwise.ListenerRegistry.messageListeners
+import com.lwise.ListenerRegistry.reactionListeners
 import com.lwise.util.launchDatabaseSyncRoutine
 import com.lwise.util.player.MusicPlayer
 import com.lwise.util.subscribeToDatabaseSync
@@ -34,18 +26,6 @@ fun main() {
         .login()
         .block()
 
-    val messageListeners = listOf(
-        MeowListener(),
-        AlignmentOptInListener(),
-        CatPictureListener(),
-        AdviceListener(),
-        SecretSantaListener(),
-        ShowQueueListener(),
-        RemoveFromQueueListener(),
-        ClearQueueListener()
-    )
-
-    val reactionListeners = listOf(AlignmentReactionListener(), FishReactionListener())
     client?.apply {
         subscribeToReady()
         subscribeToMessages(messageListeners)
