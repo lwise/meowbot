@@ -2,6 +2,7 @@ package com.lwise
 
 import com.lwise.ListenerRegistry.messageListeners
 import com.lwise.ListenerRegistry.reactionListeners
+import com.lwise.util.SpotifyClient
 import com.lwise.util.launchDatabaseSyncRoutine
 import com.lwise.util.player.MusicPlayer
 import com.lwise.util.subscribeToDatabaseSync
@@ -20,6 +21,8 @@ fun main() {
     // This initializes the MusicPlayer; objects are weird
     // This init needs to happen before the client initializes (according to the library creator)
     MusicPlayer
+
+    SpotifyClient.launchSpotifyAuthRoutine(SpotifyClient.spotifyTimeout)
 
     val client = DiscordClientBuilder.create(dotenv["BOT_TOKEN"] ?: System.getenv("BOT_TOKEN"))
         .build()

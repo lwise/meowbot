@@ -24,29 +24,29 @@ jobs:
       - name: Run MeowBot tests
         run: ./gradlew test
 
-  integrationTest:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Kotlin
-        uses: fwilhe2/setup-kotlin@main
-      - name: Load test config
-        run: mv test.config.properties config.properties
-      - name: Build MeowBot jar
-        run: ./gradlew jar
-        env:
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-          CAT_API_KEY: ${{ secrets.CAT_API_KEY }}
-      - name: Run MeowBot
-        run: java -jar build/libs/MeowBot-0.0.1.jar &
-        env:
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-          CAT_API_KEY: ${{ secrets.CAT_API_KEY }}
-      - name: Run integrated tests
-        run: ./gradlew integrationTest
-        env:
-          TESTER_BOT_TOKEN: ${{ secrets.TESTER_BOT_TOKEN }}
-          TEST_CHANNEL_ID: ${{ secrets.TEST_CHANNEL_ID }}
+#  integrationTest:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: Set up Kotlin
+#        uses: fwilhe2/setup-kotlin@main
+#      - name: Load test config
+#        run: mv test.config.properties config.properties
+#      - name: Build MeowBot jar
+#        run: ./gradlew jar
+#        env:
+#          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+#          CAT_API_KEY: ${{ secrets.CAT_API_KEY }}
+#      - name: Run MeowBot
+#        run: java -jar build/libs/MeowBot-0.0.1.jar &
+#        env:
+#          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+#          CAT_API_KEY: ${{ secrets.CAT_API_KEY }}
+#      - name: Run integrated tests
+#        run: ./gradlew integrationTest
+#        env:
+#          TESTER_BOT_TOKEN: ${{ secrets.TESTER_BOT_TOKEN }}
+#          TEST_CHANNEL_ID: ${{ secrets.TEST_CHANNEL_ID }}
 
   lint:
     runs-on: ubuntu-latest

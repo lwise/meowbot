@@ -18,13 +18,13 @@ import com.lwise.listeners.reactions.FishReactionListener
 
 object ListenerRegistry {
     val messageListeners = listOf(
+        QueueSongListener(), // Top priority in case a song gets queued with a keyword in name
         MeowListener(),
         AlignmentOptInListener(),
         CatPictureListener(),
         AdviceListener(),
         SecretSantaListener(),
         VoiceJoinListener(),
-        QueueSongListener(),
         ShowQueueListener(),
         RemoveFromQueueListener(),
         ClearQueueListener(),
