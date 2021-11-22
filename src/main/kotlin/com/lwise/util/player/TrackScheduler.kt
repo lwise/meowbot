@@ -45,6 +45,10 @@ class TrackScheduler(private val player: AudioPlayer) : AudioEventAdapter() {
         player.startTrack(queue.poll(), false)
     }
 
+    fun getQueueSize(): Int {
+        return queue.size
+    }
+
     override fun onTrackEnd(player: AudioPlayer?, track: AudioTrack?, endReason: AudioTrackEndReason?) {
         endReason?.let {
             if (it.mayStartNext) {

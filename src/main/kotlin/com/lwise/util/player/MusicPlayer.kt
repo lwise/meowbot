@@ -65,6 +65,10 @@ object MusicPlayer {
         trackScheduler.nextTrack()
     }
 
+    fun queueSize(): Int {
+        return trackScheduler.getQueueSize()
+    }
+
     private fun AudioTrack.toStringWithIndex(index: Int): String {
         return "${index + 1}. ${toDescriptionString()}"
     }
