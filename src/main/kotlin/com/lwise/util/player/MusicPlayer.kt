@@ -53,6 +53,18 @@ object MusicPlayer {
         trackScheduler.clearQueue()
     }
 
+    fun pause() {
+        player.isPaused = true
+    }
+
+    fun resume() {
+        player.isPaused = false
+    }
+
+    fun skip() {
+        trackScheduler.nextTrack()
+    }
+
     private fun AudioTrack.toStringWithIndex(index: Int): String {
         return "${index + 1}. ${toDescriptionString()}"
     }

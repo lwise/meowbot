@@ -41,7 +41,7 @@ class TrackScheduler(private val player: AudioPlayer) : AudioEventAdapter() {
         queue.clear()
     }
 
-    private fun nextTrack() {
+    fun nextTrack() {
         player.startTrack(queue.poll(), false)
     }
 
