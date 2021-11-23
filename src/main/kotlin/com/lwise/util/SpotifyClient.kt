@@ -64,6 +64,6 @@ object SpotifyClient {
     private fun requestAuthToken(): Long {
         val clientCredentials = clientCredentialsRequest.execute()
         spotifyApi.accessToken = clientCredentials.accessToken
-        return clientCredentials.expiresIn.toLong()*1000
+        return clientCredentials.expiresIn.toLong() * 1000
     }
 }
