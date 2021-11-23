@@ -15,6 +15,7 @@
 - You need to setup a bot account for Meowbot on your discord server. Follow the guide here: https://discordpy.readthedocs.io/en/latest/discord.html
 - Postgres installed with user and database setup. Currently we are developing and testing our code using Postgres 13. https://www.postgresql.org/download/
 - Get an API key from https://thecatapi.com/
+- To use the Spotify functionality, you need to set up a developer application for Spotify: https://developer.spotify.com/dashboard/login
 
 #### Create a `.env` File:
 To run Meowbot locally and connected to the bot account you need a `.env` file with the following information:
@@ -23,6 +24,8 @@ To run Meowbot locally and connected to the bot account you need a `.env` file w
 BOT_TOKEN=<token provided to you from Discord for the bot account>
 DATABASE_URL=<postgres url>
 CAT_API_KEY=<thecatapi.com key>
+SPOTIFY_CLIENT_ID=<spotify developer app client id>
+SPOTIFY_CLIENT_SECRET=<spotify developer app client secret>
 ```
 
 #### Setting up your test DB
