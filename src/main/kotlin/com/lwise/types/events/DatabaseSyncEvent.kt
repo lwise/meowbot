@@ -1,5 +1,6 @@
-package com.lwise.types
+package com.lwise.types.events
 
+import com.lwise.types.UserData
 import discord4j.common.util.Snowflake
 import discord4j.core.GatewayDiscordClient
 import discord4j.core.`object`.entity.Guild

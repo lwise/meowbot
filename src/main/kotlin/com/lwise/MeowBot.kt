@@ -2,9 +2,9 @@ package com.lwise
 
 import com.lwise.ListenerRegistry.messageListeners
 import com.lwise.ListenerRegistry.reactionListeners
-import com.lwise.util.SpotifyClient
+import com.lwise.clients.SpotifyClient
+import com.lwise.player.MusicPlayer
 import com.lwise.util.launchDatabaseSyncRoutine
-import com.lwise.util.player.MusicPlayer
 import com.lwise.util.subscribeToDatabaseSync
 import com.lwise.util.subscribeToMessages
 import com.lwise.util.subscribeToReactionAdds

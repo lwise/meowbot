@@ -1,8 +1,8 @@
 package com.lwise.listeners.messages
 
+import com.lwise.clients.DatabaseClient
 import com.lwise.types.events.MessageEvent
 import com.lwise.util.ConfigUtil
-import com.lwise.util.DatabaseClient
 import discord4j.common.util.Snowflake
 import discord4j.core.`object`.entity.Message
 import reactor.core.publisher.Mono

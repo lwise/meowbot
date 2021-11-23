@@ -1,9 +1,9 @@
 package com.lwise.listeners.messages
 
+import com.lwise.clients.AdviceClient
+import com.lwise.clients.CatFactClient
+import com.lwise.clients.FortuneClient
 import com.lwise.text.generators.MeowMessageGenerator
-import com.lwise.util.AdviceClient
-import com.lwise.util.CatFactClient
-import com.lwise.util.FortuneClient
 import java.util.Locale
 import kotlin.random.Random
 

@@ -1,5 +1,7 @@
-package com.lwise.util
+package com.lwise.clients
 
+import com.lwise.util.log
+import com.lwise.util.logException
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -19,14 +21,14 @@ object AdviceClient {
         log(this::class.java.name, "Sending GET request to: $queryAdviceUrl")
         val request = Request.Builder().url(queryAdviceUrl).build()
 
-        try {
+        return try {
             val response = client.newCall(request).execute()
             val result = JSONObject(response.body!!.string())
             log(this::class.java.name, result.toString())
-            return result.getJSONObject("slip").get("advice").toString()
+            result.getJSONObject("slip").get("advice").toString()
         } catch (exception: IOException) {
             logException(this::class.java.name, "Cannot retrieve advice from $queryAdviceUrl", exception)
-            return null
+            "I'd give you some advice, but I forgot all of it~!!"
         }
     }
 }

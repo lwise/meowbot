@@ -1,6 +1,6 @@
 package com.lwise.listeners.messages
 
-import com.lwise.util.CatApiClient
+import com.lwise.clients.CatApiClient
 
 class CatPictureListener : MessageListener {
 

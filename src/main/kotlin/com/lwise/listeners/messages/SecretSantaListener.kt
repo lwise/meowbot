@@ -24,9 +24,9 @@ class SecretSantaListener : MessageListener {
         val receivers = senders.toMutableList()
         Collections.rotate(receivers, 1)
 
-        for (i in 0..senders.size - 1) {
-            val receiver = responseVector.guild.getMemberById(receivers.get(i)).block()!!
-            val sender = responseVector.guild.getMemberById(senders.get(i)).block()!!
+        for (i in senders.indices) {
+            val receiver = responseVector.guild.getMemberById(receivers[i]).block()!!
+            val sender = responseVector.guild.getMemberById(senders[i]).block()!!
 
             sender.privateChannel.subscribe {
                 it.createMessage(

@@ -1,9 +1,11 @@
 package com.lwise.util
 
 import com.lwise.alignment.AlignmentDefinitions
+import com.lwise.clients.DatabaseClient
 import com.lwise.listeners.messages.MessageListener
 import com.lwise.listeners.reactions.ReactionListener
-import com.lwise.types.DatabaseSyncEvent
+import com.lwise.transformers.UserDataListTransformer
+import com.lwise.types.events.DatabaseSyncEvent
 import com.lwise.types.events.toMessageEvent
 import com.lwise.types.events.toReactionAddEvent
 import com.lwise.types.events.toReactionRemoveEvent
