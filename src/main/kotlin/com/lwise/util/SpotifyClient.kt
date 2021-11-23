@@ -10,6 +10,8 @@ import java.net.URL
 
 object SpotifyClient {
 
+    val MAX_PLAYLIST_SIZE = 50 // To avoid getting IP banned by youtube
+
     private val dotenv = dotenv {
         ignoreIfMissing = true
     }
@@ -37,7 +39,7 @@ object SpotifyClient {
             val typecastedTrack = track as Track
             trackInfoList.add("${typecastedTrack.name} ${typecastedTrack.artists.first().name}")
         }
-        return trackInfoList
+        return trackInfoList.safeSubList(0, MAX_PLAYLIST_SIZE - 1)
     }
 
     fun getTrackInfo(spotifyUrl: URL): String? {
