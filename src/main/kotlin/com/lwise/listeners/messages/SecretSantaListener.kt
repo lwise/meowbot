@@ -18,7 +18,7 @@ class SecretSantaListener : MessageListener {
 
         val users = message.split(" ").filter { it.contains("<") && it.contains(">") }
 
-        val participantIds = users.mapNotNull { Snowflake.of("\\d+".toRegex().find(it)?.value) }
+        val participantIds = users.mapNotNull { Snowflake.of("\\d+".toRegex().find(it)?.value!!) }
 
         val senders = participantIds.shuffled()
         val receivers = senders.toMutableList()

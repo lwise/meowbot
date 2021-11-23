@@ -1,13 +1,14 @@
-package com.lwise.listeners.messages
+package com.lwise.listeners.messages.musicplayer
 
+import com.lwise.listeners.messages.MessageListener
 import com.lwise.types.events.MessageEvent
 import com.lwise.util.ConfigUtil
 import com.lwise.util.player.MusicPlayer
 import discord4j.core.`object`.entity.Message
+import discord4j.core.spec.EmbedCreateFields
 import discord4j.core.spec.EmbedCreateSpec
 import discord4j.rest.util.Color
 import reactor.core.publisher.Mono
-import java.util.function.Consumer
 
 class ShowQueueListener : MessageListener {
     companion object {
@@ -27,18 +28,16 @@ class ShowQueueListener : MessageListener {
         // Can add paging functionality later
         val queueList = MusicPlayer.getQueueDataAsStringList(0, MAX_SONG_DISPLAY_SIZE)
         val queueListString = queueList.joinToString("\n")
-        val consumer = Consumer<EmbedCreateSpec> { embedSpec ->
-            embedSpec.apply {
-                setColor(Color.DARK_GOLDENROD)
-                setTitle("Music Queue ${ConfigUtil.emoji["happyCat"]}")
-                setFooter("Displaying first ${queueList.size}/${MusicPlayer.queueSize()} songs:", "https://uboachan.net/warc/src/1329727415262.gif")
-                nowPlayingString?.let {
-                    addField("Now Playing", it, false)
-                }
-                setDescription(queueListString)
+        val embedSpec = EmbedCreateSpec.create().apply {
+            withColor(Color.DARK_GOLDENROD)
+            withTitle("Music Queue ${ConfigUtil.emoji["happyCat"]}")
+            withFooter(EmbedCreateFields.Footer.of("Displaying first ${queueList.size}/${MusicPlayer.queueSize()} songs:", "https://uboachan.net/warc/src/1329727415262.gif"))
+            nowPlayingString?.let {
+                withFields(listOf(EmbedCreateFields.Field.of("Now Playing", it, false)))
             }
+            withDescription(queueListString)
         }
 
-        return responseVector.channel.createEmbed(consumer)
+        return responseVector.channel.createMessage(embedSpec)
     }
 }

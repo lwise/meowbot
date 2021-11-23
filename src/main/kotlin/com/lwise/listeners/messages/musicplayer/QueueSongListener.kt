@@ -1,5 +1,6 @@
-package com.lwise.listeners.messages
+package com.lwise.listeners.messages.musicplayer
 
+import com.lwise.listeners.messages.MessageListener
 import com.lwise.types.events.MessageEvent
 import com.lwise.util.SpotifyClient
 import com.lwise.util.asUrlOrNull
