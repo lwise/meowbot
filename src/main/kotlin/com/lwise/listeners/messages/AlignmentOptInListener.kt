@@ -40,7 +40,8 @@ class AlignmentOptInListener : MessageListener {
             // insert user into database
             val userId = userToOptIn.id.asBigInteger()
             val userName = userToOptIn.username
-            val userQuery = "INSERT INTO users (id, username, chaotic_points, lawful_points, good_points, evil_points) VALUES ($userId, '$userName', 0, 0, 0, 0) ON CONFLICT DO NOTHING;"
+            val guildId = userToOptIn.guildId
+            val userQuery = "INSERT INTO users (id, guild_id, username, chaotic_points, lawful_points, good_points, evil_points) VALUES ($userId, $guildId, '$userName', 0, 0, 0, 0) ON CONFLICT DO NOTHING;"
             DatabaseClient.update(userQuery)
 
             // give the user the True Neutral role to start

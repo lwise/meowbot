@@ -90,17 +90,15 @@ fun GatewayDiscordClient.launchDatabaseSyncRoutine(timeInterval: Long) {
     val job = CoroutineScope(Dispatchers.IO).launchPeriodicAsync(timeInterval) {
         val usersQuery = "SELECT * FROM users;"
         val users = DatabaseClient.query(usersQuery, UserDataListTransformer())!!
-        eventDispatcher.publish(DatabaseSyncEvent(this, ShardInfo.create(0, 1), Snowflake.of(ConfigUtil.guildId), users))
+        eventDispatcher.publish(DatabaseSyncEvent(this, ShardInfo.create(0, 1), users))
     }
 }
 
-// sorry this is kind of disgusting
 fun GatewayDiscordClient.subscribeToDatabaseSync() {
     eventDispatcher.on(DatabaseSyncEvent::class.java).map { event ->
-        val guildMembers = event.getGuild().block()!!.members.collectList()
         event.getUsers().forEach { user ->
             val alignmentRole = AlignmentDefinitions.calculateRole(user.chaoticPoints, user.lawfulPoints, user.goodPoints, user.evilPoints)
-            val memberToUpdate = guildMembers.block()!!.firstOrNull {
+            val memberToUpdate = getGuildById(Snowflake.of(user.guildId)).block()?.members?.collectList()?.block()?.firstOrNull {
                 it.username == user.userName
             }
             memberToUpdate?.let { member ->
@@ -110,7 +108,7 @@ fun GatewayDiscordClient.subscribeToDatabaseSync() {
                     }.filter { roleName ->
                         ConfigUtil.alignmentRoles.keys.contains(roleName)
                     }.collectList()
-                usersCurrentAlignmentRole.block()!!.firstOrNull()?.let { currentRole ->
+                usersCurrentAlignmentRole.block()?.firstOrNull()?.let { currentRole ->
                     if (alignmentRole != currentRole) {
                         member.removeRole(Snowflake.of(ConfigUtil.alignmentRoles[currentRole]!!)).block()
                         member.addRole(Snowflake.of(ConfigUtil.alignmentRoles[alignmentRole]!!)).block()
