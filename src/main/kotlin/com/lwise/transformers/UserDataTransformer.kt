@@ -1,4 +1,4 @@
-package com.lwise.util
+package com.lwise.transformers
 
 import com.lwise.types.UserData
 import java.sql.ResultSet

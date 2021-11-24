@@ -1,18 +1,19 @@
-package com.lwise.listeners.messages
+package com.lwise.listeners.messages.musicplayer
 
+import com.lwise.listeners.messages.MessageListener
+import com.lwise.player.MusicPlayer
 import com.lwise.types.events.MessageEvent
-import com.lwise.util.player.MusicPlayer
 import discord4j.core.`object`.entity.Message
 import reactor.core.publisher.Mono
 
-class ResumeMusicListener : MessageListener {
+class PauseMusicListener : MessageListener {
     override val regexString: String
-        get() = "m!play"
+        get() = "m!pause"
 
     override fun getResponseMessage(): String = ""
 
     override fun respond(responseVector: MessageEvent): Mono<Message> {
-        MusicPlayer.resume()
+        MusicPlayer.pause()
         return super.respond(responseVector)
     }
 }

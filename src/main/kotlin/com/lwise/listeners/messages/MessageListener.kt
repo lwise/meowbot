@@ -4,6 +4,7 @@ import com.lwise.listeners.Listener
 import com.lwise.types.events.MessageEvent
 import discord4j.core.`object`.entity.Message
 import reactor.core.publisher.Mono
+import java.util.Locale
 
 interface MessageListener : Listener<MessageEvent> {
     // use lowercase match
@@ -11,7 +12,7 @@ interface MessageListener : Listener<MessageEvent> {
 
     override fun isTriggered(content: String): Boolean {
         val regex = regexString.toRegex()
-        return regex.containsMatchIn(content.toLowerCase())
+        return regex.containsMatchIn(content.lowercase(Locale.getDefault()))
     }
 
     override fun respond(responseVector: MessageEvent): Mono<Message> {

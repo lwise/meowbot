@@ -1,5 +1,7 @@
-package com.lwise.util
+package com.lwise.clients
 
+import com.lwise.transformers.ResultTransformer
+import com.lwise.util.logException
 import io.github.cdimascio.dotenv.dotenv
 import java.lang.Exception
 import java.net.URI
@@ -35,7 +37,7 @@ class DatabaseClient {
         }
 
         fun update(sqlQueryString: String): Int {
-            var rowsUpdated: Int = 0
+            var rowsUpdated = 0
             try {
                 connect().createStatement().apply {
                     rowsUpdated = executeUpdate(sqlQueryString)

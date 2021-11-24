@@ -1,4 +1,4 @@
-package com.lwise.util.player
+package com.lwise.player
 
 import com.lwise.util.log
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer

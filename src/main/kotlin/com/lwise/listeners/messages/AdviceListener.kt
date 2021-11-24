@@ -1,9 +1,10 @@
 package com.lwise.listeners.messages
 
+import com.lwise.clients.AdviceClient
+import com.lwise.clients.CatFactClient
+import com.lwise.clients.FortuneClient
 import com.lwise.text.generators.MeowMessageGenerator
-import com.lwise.util.AdviceClient
-import com.lwise.util.CatFactClient
-import com.lwise.util.FortuneClient
+import java.util.Locale
 import kotlin.random.Random
 
 class AdviceListener : MessageListener {
@@ -22,7 +23,7 @@ class AdviceListener : MessageListener {
         if (Random.nextInt(100) > 75) {
             arguments.add(meowMessageGenerator.preMessage[Random.nextInt(meowMessageGenerator.preMessage.size)])
         }
-        advice?.let { arguments.add(it.toLowerCase().replace("\\n", "").replace("\"", "")) }
+        advice?.let { arguments.add(it.lowercase(Locale.getDefault()).replace("\\n", "").replace("\"", "")) }
         if (Random.nextInt(100) > 75) {
             arguments.add(meowMessageGenerator.postMessage[Random.nextInt(meowMessageGenerator.postMessage.size)])
         }

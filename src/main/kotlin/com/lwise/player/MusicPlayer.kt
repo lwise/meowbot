@@ -1,4 +1,4 @@
-package com.lwise.util.player
+package com.lwise.player
 
 import com.lwise.util.safeSubList
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler

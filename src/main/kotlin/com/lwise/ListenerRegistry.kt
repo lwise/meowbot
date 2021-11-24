@@ -5,14 +5,14 @@ import com.lwise.listeners.messages.AlignmentOptInListener
 import com.lwise.listeners.messages.CatPictureListener
 import com.lwise.listeners.messages.ClearQueueListener
 import com.lwise.listeners.messages.MeowListener
-import com.lwise.listeners.messages.PauseMusicListener
-import com.lwise.listeners.messages.QueueSongListener
-import com.lwise.listeners.messages.RemoveFromQueueListener
-import com.lwise.listeners.messages.ResumeMusicListener
 import com.lwise.listeners.messages.SecretSantaListener
-import com.lwise.listeners.messages.ShowQueueListener
-import com.lwise.listeners.messages.SkipSongListener
-import com.lwise.listeners.messages.VoiceJoinListener
+import com.lwise.listeners.messages.musicplayer.PauseMusicListener
+import com.lwise.listeners.messages.musicplayer.QueueSongListener
+import com.lwise.listeners.messages.musicplayer.RemoveFromQueueListener
+import com.lwise.listeners.messages.musicplayer.ResumeMusicListener
+import com.lwise.listeners.messages.musicplayer.ShowQueueListener
+import com.lwise.listeners.messages.musicplayer.SkipSongListener
+import com.lwise.listeners.messages.musicplayer.VoiceJoinListener
 import com.lwise.listeners.reactions.AlignmentReactionListener
 import com.lwise.listeners.reactions.FishReactionListener
 

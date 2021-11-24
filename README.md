@@ -34,6 +34,7 @@ You can use this to set up your local `users` table for Meowbot:
 CREATE TABLE users (
   id bigint PRIMARY KEY NOT NULL,
   username varchar(32) NOT NULL,
+  guild_id bigint NOT NULL DEFAULT 0,
   chaotic_points integer NOT NULL DEFAULT 0,
   lawful_points integer NOT NULL DEFAULT 0,
   good_points integer NOT NULL DEFAULT 0,
@@ -45,7 +46,7 @@ CREATE TABLE users (
 Then, where `<your_id>` is your user id on discord and `<your_name>` is your Discord username WITHOUT the trailing numbers...
 
 ```sql
-INSERT INTO users (id, username) VALUES (<your_id>, '<your_name>');
+INSERT INTO users (id, username, guild_id) VALUES (<your_id>, '<your_name>', <your_guild_id>);
 ```
 
 If you want to run MeowBot on your server you will also need to replace the values in `config.properties` with those from your own server.

@@ -1,7 +1,7 @@
 package com.lwise.listeners.messages
 
+import com.lwise.player.MusicPlayer
 import com.lwise.types.events.MessageEvent
-import com.lwise.util.player.MusicPlayer
 import discord4j.core.`object`.entity.Message
 import reactor.core.publisher.Mono
 

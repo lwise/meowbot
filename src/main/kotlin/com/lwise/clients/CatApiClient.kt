@@ -1,5 +1,8 @@
-package com.lwise.util
+package com.lwise.clients
 
+import com.lwise.util.ConfigUtil
+import com.lwise.util.log
+import com.lwise.util.logException
 import io.github.cdimascio.dotenv.dotenv
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
@@ -36,18 +39,18 @@ object CatApiClient {
             .header("x-api-key", API_KEY)
             .build()
 
-        try {
+        return try {
             val response = client.newCall(request).execute()
             val result = JSONArray(response.body!!.string())
             log(this::class.java.name, result.toString())
 
             val imageUrl = result.getJSONObject(0).get("url").toString()
 
-            return imageUrl
+            imageUrl
         } catch (e: IOException) {
             logException(this::class.java.name, "Cannot retrieve image from: $queryImageUrl", e)
 
-            return "Cannot retrieve cat pic ${ConfigUtil.emoji["crying"]}"
+            "Cannot retrieve cat pic ${ConfigUtil.emoji["crying"]}"
         }
     }
 }

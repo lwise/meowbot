@@ -1,5 +1,8 @@
-package com.lwise.util
+package com.lwise.clients
 
+import com.lwise.util.getLastPathSegment
+import com.lwise.util.launchPeriodicAsync
+import com.lwise.util.safeSubList
 import io.github.cdimascio.dotenv.dotenv
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -10,7 +13,7 @@ import java.net.URL
 
 object SpotifyClient {
 
-    val MAX_PLAYLIST_SIZE = 50 // To avoid getting IP banned by youtube
+    private const val MAX_PLAYLIST_SIZE = 50 // To avoid getting IP banned by youtube
 
     private val dotenv = dotenv {
         ignoreIfMissing = true

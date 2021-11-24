@@ -1,8 +1,8 @@
 package com.lwise.listeners.messages
 
+import com.lwise.clients.DatabaseClient
 import com.lwise.types.events.MessageEvent
 import com.lwise.util.ConfigUtil
-import com.lwise.util.DatabaseClient
 import discord4j.common.util.Snowflake
 import discord4j.core.`object`.entity.Message
 import reactor.core.publisher.Mono
@@ -30,7 +30,7 @@ class AlignmentOptInListener : MessageListener {
             }.filter { roleName ->
                 ConfigUtil.alignmentRoles.keys.contains(roleName)
             }.collectList()
-        val filteredRoles = userAlignmentRoles.block()!!
+        val filteredRoles = userAlignmentRoles.block()
         return if (!filteredRoles.isNullOrEmpty()) {
             // the user is already playing
             responseVector.channel.createMessage(getFailureResponseMessage())
@@ -44,7 +44,7 @@ class AlignmentOptInListener : MessageListener {
             DatabaseClient.update(userQuery)
 
             // give the user the True Neutral role to start
-            userToOptIn.addRole(Snowflake.of(ConfigUtil.alignmentRoles["True Neutral"])).block()
+            userToOptIn.addRole(Snowflake.of(ConfigUtil.alignmentRoles["True Neutral"]!!)).block()
             super.respond(responseVector)
         }
     }
