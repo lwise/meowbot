@@ -4,13 +4,11 @@ import java.io.FileInputStream
 import java.util.Properties
 
 object ConfigUtil {
-    val guildId: String
     val alignmentRoles: MutableMap<String, String>
     val emoji: MutableMap<String, String>
     init {
         val prop = Properties()
         prop.load(FileInputStream("config.properties"))
-        guildId = prop.getProperty("guildId")
 
         alignmentRoles = mutableMapOf()
         alignmentRoles["Chaotic Evil"] = prop.getProperty("chaoticEvil")

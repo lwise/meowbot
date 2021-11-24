@@ -10,6 +10,7 @@ class UserDataListTransformer : ResultTransformer<List<UserData>> {
             userList.add(
                 UserData(
                     id = resultSet.getLong("id"),
+                    guildId = resultSet.getLong("guild_id"),
                     userName = resultSet.getString("username"),
                     chaoticPoints = resultSet.getInt("chaotic_points"),
                     lawfulPoints = resultSet.getInt("lawful_points"),
