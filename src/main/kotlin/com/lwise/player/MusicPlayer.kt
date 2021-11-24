@@ -1,5 +1,6 @@
 package com.lwise.player
 
+import com.lwise.util.ConfigUtil
 import com.lwise.util.safeSubList
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer
@@ -10,6 +11,7 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import com.sedmelluq.discord.lavaplayer.track.playback.NonAllocatingAudioFrameBuffer
+import discord4j.core.`object`.entity.channel.MessageChannel
 import discord4j.voice.AudioProvider
 
 object MusicPlayer {
@@ -31,8 +33,8 @@ object MusicPlayer {
         player.addListener(trackScheduler)
     }
 
-    fun addTrackToQueue(url: String) {
-        playerManager.loadItemOrdered(this, url, ResultHandler())
+    fun addTrackToQueue(url: String, channel: MessageChannel) {
+        playerManager.loadItemOrdered(this, url, ResultHandler(channel))
     }
 
     fun removeTrackFromQueue(index: Int): String? {
@@ -81,7 +83,7 @@ object MusicPlayer {
         trackScheduler.queue(track)
     }
 
-    class ResultHandler : AudioLoadResultHandler {
+    class ResultHandler(private val channel: MessageChannel) : AudioLoadResultHandler {
         override fun trackLoaded(track: AudioTrack?) {
             track?.let { play(it) }
         }
@@ -99,11 +101,11 @@ object MusicPlayer {
         }
 
         override fun noMatches() {
-            // MeowBot can handle this later
+            channel.createMessage("I couldn't find a match for that ${ConfigUtil.emoji["crying"]}")
         }
 
         override fun loadFailed(exception: FriendlyException?) {
-            // MeowBot can handle this later
+            channel.createMessage("I tried so hard and got so far, but in the end I couldn't load it ${ConfigUtil.emoji["crying"]}")
         }
     }
 }
