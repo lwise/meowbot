@@ -2,6 +2,7 @@ package com.lwise.clients
 
 import com.lwise.util.getLastPathSegment
 import com.lwise.util.launchPeriodicAsync
+import com.lwise.util.logException
 import com.lwise.util.safeSubList
 import io.github.cdimascio.dotenv.dotenv
 import kotlinx.coroutines.CoroutineScope
@@ -65,8 +66,13 @@ object SpotifyClient {
     }
 
     private fun requestAuthToken(): Long {
-        val clientCredentials = clientCredentialsRequest.execute()
-        spotifyApi.accessToken = clientCredentials.accessToken
-        return clientCredentials.expiresIn.toLong() * 1000
+        return try {
+            val clientCredentials = clientCredentialsRequest.execute()
+            spotifyApi.accessToken = clientCredentials.accessToken
+            clientCredentials.expiresIn.toLong() * 1000
+        } catch (e: Exception) {
+            logException(this::class.java.name, "Spotify auth request returned exception", e)
+            600
+        }
     }
 }

@@ -28,16 +28,15 @@ class ShowQueueListener : MessageListener {
         // Can add paging functionality later
         val queueList = MusicPlayer.getQueueDataAsStringList(0, MAX_SONG_DISPLAY_SIZE)
         val queueListString = queueList.joinToString("\n")
-        val embedSpec = EmbedCreateSpec.create().apply {
-            withColor(Color.DARK_GOLDENROD)
-            withTitle("Music Queue ${ConfigUtil.emoji["happyCat"]}")
-            withFooter(EmbedCreateFields.Footer.of("Displaying first ${queueList.size}/${MusicPlayer.queueSize()} songs:", "https://uboachan.net/warc/src/1329727415262.gif"))
+        val embedSpec = EmbedCreateSpec.builder().apply {
+            color(Color.DARK_GOLDENROD)
+            title("Music Queue ${ConfigUtil.emoji["happyCat"]}")
+            footer("Displaying first ${queueList.size}/${MusicPlayer.queueSize()} songs", "https://uboachan.net/warc/src/1329727415262.gif")
             nowPlayingString?.let {
-                withFields(listOf(EmbedCreateFields.Field.of("Now Playing", it, false)))
+                fields(listOf(EmbedCreateFields.Field.of("Now Playing", it, false)))
             }
-            withDescription(queueListString)
-        }
-
+            description(queueListString)
+        }.build()
         return responseVector.channel.createMessage(embedSpec)
     }
 }
