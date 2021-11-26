@@ -77,6 +77,10 @@ object MusicPlayer {
         trackScheduler.nextTrack()
     }
 
+    fun shuffle() {
+        trackScheduler.shuffleQueue()
+    }
+
     fun queueSize(): Int {
         return trackScheduler.getQueueSize()
     }

@@ -45,6 +45,14 @@ class TrackScheduler(private val player: AudioPlayer) : AudioEventAdapter() {
         player.startTrack(queue.poll(), false)
     }
 
+    fun shuffleQueue() {
+        val newSongs = queue.shuffled()
+        queue.clear()
+        newSongs.forEach {
+            queue.add(it)
+        }
+    }
+
     fun getQueueSize(): Int {
         return queue.size
     }
