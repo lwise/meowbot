@@ -1,5 +1,6 @@
 package com.lwise.player
 
+import com.lwise.clients.FixieClient
 import com.lwise.util.ConfigUtil
 import com.lwise.util.safeSubList
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler
@@ -13,6 +14,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import com.sedmelluq.discord.lavaplayer.track.playback.NonAllocatingAudioFrameBuffer
 import discord4j.core.`object`.entity.channel.MessageChannel
 import discord4j.voice.AudioProvider
+import org.apache.http.client.config.RequestConfig
 
 object MusicPlayer {
     private val player: AudioPlayer
@@ -25,6 +27,14 @@ object MusicPlayer {
     init {
         playerManager = DefaultAudioPlayerManager()
         playerManager.configuration.setFrameBufferFactory(::NonAllocatingAudioFrameBuffer)
+        playerManager.setHttpRequestConfigurator { config ->
+            RequestConfig.copy(config)
+                .setProxy(FixieClient.proxyHost)
+                .build()
+        }
+        playerManager.setHttpBuilderConfigurator { config ->
+            config.setProxy(FixieClient.proxyHost).setDefaultCredentialsProvider(FixieClient.credentialsProvider).build()
+        }
         AudioSourceManagers.registerRemoteSources(playerManager)
         AudioSourceManagers.registerLocalSource(playerManager)
         player = playerManager.createPlayer()
