@@ -1,6 +1,5 @@
 package com.lwise.types.events
 
-import discord4j.common.util.Snowflake
 import discord4j.core.`object`.entity.Guild
 import discord4j.core.`object`.entity.Member
 import discord4j.core.`object`.entity.Message
@@ -23,7 +22,7 @@ data class ReactionEvent(
     val reactingUser: User,
     val userReactedTo: User?,
     val eventType: ReactionEventType,
-    val guildId: Snowflake
+    val guild: Guild
 )
 
 data class MessageEvent(
@@ -42,7 +41,7 @@ fun ReactionAddEvent.toReactionAddEvent(): ReactionEvent {
         reactingUser = user.block()!!,
         userReactedTo = messageData.author.takeIf { it.isPresent }?.get(),
         eventType = ReactionEventType.ADDED,
-        guildId = guildId.get()
+        guild = guild.block()!!
     )
 }
 
@@ -55,7 +54,7 @@ fun ReactionRemoveEvent.toReactionRemoveEvent(): ReactionEvent {
         reactingUser = user.block()!!,
         userReactedTo = messageData.author.takeIf { it.isPresent }?.get(),
         eventType = ReactionEventType.REMOVED,
-        guildId = guildId.get()
+        guild = guild.block()!!
     )
 }
 
