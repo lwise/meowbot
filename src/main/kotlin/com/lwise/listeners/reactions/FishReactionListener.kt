@@ -13,6 +13,7 @@ class FishReactionListener : ReactionListener {
 
     override fun respond(responseVector: ReactionEvent): Mono<Message> {
         if (wasAMeowbotFeedingRequest(responseVector)) {
+            val guildId = responseVector.guildId
             val userToGiveFishPointsTo = responseVector.reactingUser
             val userFetchQuery = "SELECT * FROM users WHERE username = '${userToGiveFishPointsTo.username}';"
             val userFromDatabase = DatabaseClient.query(userFetchQuery, UserDataTransformer())
@@ -22,7 +23,7 @@ class FishReactionListener : ReactionListener {
                 DatabaseClient.update(userUpdateQuery)
             } ?: run {
                 // user isn't in the database yet
-                val userQuery = "INSERT INTO users (id, username, fish_points) VALUES (${userToGiveFishPointsTo.id.asBigInteger()}, '${userToGiveFishPointsTo.username}', 1) ON CONFLICT DO NOTHING;"
+                val userQuery = "INSERT INTO users (id, username, guild_id, fish_points) VALUES (${userToGiveFishPointsTo.id.asBigInteger()}, '${userToGiveFishPointsTo.username}', ${guildId.asBigInteger()}, 1) ON CONFLICT DO NOTHING;"
                 DatabaseClient.update(userQuery)
             }
         }
