@@ -11,6 +11,7 @@ import com.lwise.listeners.messages.musicplayer.QueueSongListener
 import com.lwise.listeners.messages.musicplayer.RemoveFromQueueListener
 import com.lwise.listeners.messages.musicplayer.ResumeMusicListener
 import com.lwise.listeners.messages.musicplayer.ShowQueueListener
+import com.lwise.listeners.messages.musicplayer.ShuffleMusicListener
 import com.lwise.listeners.messages.musicplayer.SkipSongListener
 import com.lwise.listeners.messages.musicplayer.VoiceJoinListener
 import com.lwise.listeners.reactions.AlignmentReactionListener
@@ -30,7 +31,8 @@ object ListenerRegistry {
         ClearQueueListener(),
         PauseMusicListener(),
         ResumeMusicListener(),
-        SkipSongListener()
+        SkipSongListener(),
+        ShuffleMusicListener()
     )
 
     val reactionListeners = listOf(
