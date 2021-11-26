@@ -6,6 +6,8 @@ import com.lwise.transformers.UserDataTransformer
 import com.lwise.types.UserData
 import com.lwise.types.events.ReactionEvent
 import com.lwise.types.events.ReactionEventType
+import com.lwise.util.ConfigUtil
+import discord4j.common.util.Snowflake
 import discord4j.core.`object`.entity.Message
 import reactor.core.publisher.Mono
 import java.lang.Exception
@@ -17,23 +19,26 @@ class AlignmentReactionListener : ReactionListener {
     }
 
     override fun respond(responseVector: ReactionEvent): Mono<Message> {
-        val discordUserToUpdate = responseVector.userReactedTo ?: return Mono.empty()
-        val userFetchQuery = "SELECT * FROM users WHERE username = '${discordUserToUpdate.username}';"
+        if (responseVector.guild.roles.collectList().block()?.map { role -> role.id }?.contains(Snowflake.of(ConfigUtil.alignmentRoles["True Neutral"]!!)) == true) {
+            val discordUserToUpdate = responseVector.userReactedTo ?: return Mono.empty()
+            val userFetchQuery = "SELECT * FROM users WHERE username = '${discordUserToUpdate.username}';"
 
-        // prevent people from voting themselves
-        if (discordUserToUpdate == responseVector.reactingUser) {
-            return Mono.empty()
-        }
+            // prevent people from voting themselves
+            if (discordUserToUpdate == responseVector.reactingUser) {
+                return Mono.empty()
+            }
 
-        // else continue and update database
-        val userFromDatabase = DatabaseClient.query(userFetchQuery, UserDataTransformer())
+            // else continue and update database
+            val userFromDatabase = DatabaseClient.query(userFetchQuery, UserDataTransformer())
 
-        userFromDatabase?.let { user ->
-            val triggerEmojiName = responseVector.emoji.asCustomEmoji().takeIf { it.isPresent }?.get()?.name
-            triggerEmojiName?.let {
-                val newPoints = calculateNewPoints(user, triggerEmojiName, responseVector.eventType)
-                val userUpdateQuery = "UPDATE users SET ${triggerEmojiName}_points = $newPoints WHERE id = '${user.id}';"
-                DatabaseClient.update(userUpdateQuery)
+            userFromDatabase?.let { user ->
+                val triggerEmojiName = responseVector.emoji.asCustomEmoji().takeIf { it.isPresent }?.get()?.name
+                triggerEmojiName?.let {
+                    val newPoints = calculateNewPoints(user, triggerEmojiName, responseVector.eventType)
+                    val userUpdateQuery =
+                        "UPDATE users SET ${triggerEmojiName}_points = $newPoints WHERE id = '${user.id}';"
+                    DatabaseClient.update(userUpdateQuery)
+                }
             }
         }
         return Mono.empty()

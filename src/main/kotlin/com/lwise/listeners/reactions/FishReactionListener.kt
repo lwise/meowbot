@@ -13,7 +13,7 @@ class FishReactionListener : ReactionListener {
 
     override fun respond(responseVector: ReactionEvent): Mono<Message> {
         if (wasAMeowbotFeedingRequest(responseVector)) {
-            val guildId = responseVector.guildId
+            val guildId = responseVector.guild.id
             val userToGiveFishPointsTo = responseVector.reactingUser
             val userFetchQuery = "SELECT * FROM users WHERE username = '${userToGiveFishPointsTo.username}';"
             val userFromDatabase = DatabaseClient.query(userFetchQuery, UserDataTransformer())

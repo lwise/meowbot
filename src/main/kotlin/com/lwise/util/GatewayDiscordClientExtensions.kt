@@ -98,20 +98,23 @@ fun GatewayDiscordClient.subscribeToDatabaseSync() {
     eventDispatcher.on(DatabaseSyncEvent::class.java).map { event ->
         event.getUsers().forEach { user ->
             val alignmentRole = AlignmentDefinitions.calculateRole(user.chaoticPoints, user.lawfulPoints, user.goodPoints, user.evilPoints)
-            val memberToUpdate = getGuildById(Snowflake.of(user.guildId)).block()?.members?.collectList()?.block()?.firstOrNull {
+            val guild = getGuildById(Snowflake.of(user.guildId)).block()
+            val memberToUpdate = guild?.members?.collectList()?.block()?.firstOrNull {
                 it.username == user.userName
             }
-            memberToUpdate?.let { member ->
-                val usersCurrentAlignmentRole = member.roles
-                    .map { role ->
-                        role.name
-                    }.filter { roleName ->
-                        ConfigUtil.alignmentRoles.keys.contains(roleName)
-                    }.collectList()
-                usersCurrentAlignmentRole.block()?.firstOrNull()?.let { currentRole ->
-                    if (alignmentRole != currentRole) {
-                        member.removeRole(Snowflake.of(ConfigUtil.alignmentRoles[currentRole]!!)).block()
-                        member.addRole(Snowflake.of(ConfigUtil.alignmentRoles[alignmentRole]!!)).block()
+            if (guild?.roles?.collectList()?.block()?.map { role -> role.id }?.contains(Snowflake.of(ConfigUtil.alignmentRoles["True Neutral"]!!)) == true) {
+                memberToUpdate?.let { member ->
+                    val usersCurrentAlignmentRole = member.roles
+                        .map { role ->
+                            role.name
+                        }.filter { roleName ->
+                            ConfigUtil.alignmentRoles.keys.contains(roleName)
+                        }.collectList()
+                    usersCurrentAlignmentRole.block()?.firstOrNull()?.let { currentRole ->
+                        if (alignmentRole != currentRole) {
+                            member.removeRole(Snowflake.of(ConfigUtil.alignmentRoles[currentRole]!!)).block()
+                            member.addRole(Snowflake.of(ConfigUtil.alignmentRoles[alignmentRole]!!)).block()
+                        }
                     }
                 }
             }
