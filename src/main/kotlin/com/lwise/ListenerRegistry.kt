@@ -4,6 +4,7 @@ import com.lwise.listeners.messages.AdviceListener
 import com.lwise.listeners.messages.AlignmentOptInListener
 import com.lwise.listeners.messages.CatPictureListener
 import com.lwise.listeners.messages.ClearQueueListener
+import com.lwise.listeners.messages.MealSuggestionListener
 import com.lwise.listeners.messages.MeowListener
 import com.lwise.listeners.messages.SecretSantaListener
 import com.lwise.listeners.messages.musicplayer.PauseMusicListener
@@ -23,6 +24,7 @@ object ListenerRegistry {
         MeowListener(),
         AlignmentOptInListener(),
         CatPictureListener(),
+        MealSuggestionListener(),
         AdviceListener(),
         SecretSantaListener(),
         VoiceJoinListener(),
