@@ -6,7 +6,7 @@ import java.util.Locale
 import kotlin.random.Random
 
 class MealSuggestionListener : MessageListener {
-    override val regexString = "meowbot\\s.*\\s(eat|dinner|meal|supper|hungry)(\\s|\\?).*"
+    override val regexString = "meowbot\\s.*\\s(eat|dinner|meal|supper|hungry).*"
 
     override fun getResponseMessage(): String {
         val meal = MealApiClient.getRandomMeal()
